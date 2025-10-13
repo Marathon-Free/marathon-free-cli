@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://bv1s2bi6tdapl"]
+
+[ext_resource type="Texture2D" uid="uid://b8n36768il2e0" path="res://icon.svg" id="1_67lcr"]
+[ext_resource type="Script" uid="uid://i4qpknythgsc" path="res://levels/level.gd" id="1_jqvng"]
+[ext_resource type="PackedScene" uid="uid://difrqebur2kpc" path="res://entities/being/player/player_body_3d.tscn" id="2_u8ecf"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_u8ecf"]
+size = Vector2(200, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jqvng"]
+albedo_texture = ExtResource("1_67lcr")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_umreq"]
+
+[node name="DevLevel" type="Node3D"]
+script = ExtResource("1_jqvng")
+metadata/_custom_type_script = "uid://i4qpknythgsc"
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry"]
+mesh = SubResource("PlaneMesh_u8ecf")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_jqvng")
+
+[node name="Ground" type="StaticBody3D" parent="Geometry/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/MeshInstance3D/Ground"]
+shape = SubResource("WorldBoundaryShape3D_umreq")
+
+[node name="Env" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Env"]
+transform = Transform3D(1, 0, 0, 0, 0.9982399, 0.059306394, 0, -0.059306394, 0.9982399, 0, 10, 0)
+
+[node name="PlayerBody3D" parent="." instance=ExtResource("2_u8ecf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

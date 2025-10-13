@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://difrqebur2kpc"]
+
+[ext_resource type="Script" uid="uid://jf7a08qqowx0" path="res://entities/being/player/player_body_3d.gd" id="1_02h5w"]
+[ext_resource type="Script" uid="uid://chd0osbkqdv3h" path="res://scripts/state_machine.gd" id="2_tfbvc"]
+[ext_resource type="Script" uid="uid://duxw0vqlnjm38" path="res://entities/being/player/states/player_idle_state.gd" id="3_2k0nr"]
+[ext_resource type="Script" uid="uid://823kwjmherto" path="res://entities/being/player/states/player_walking_state.gd" id="3_boijd"]
+[ext_resource type="Script" uid="uid://bkoe7q5cgphew" path="res://entities/being/player/states/player_air_state.gd" id="3_heart"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lko6g"]
+
+[node name="PlayerBody3D" type="CharacterBody3D"]
+script = ExtResource("1_02h5w")
+metadata/_custom_type_script = "uid://jf7a08qqowx0"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_lko6g")
+
+[node name="PivotY" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="PivotX" type="Node3D" parent="PivotY"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="PivotY/PivotX"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+fov = 90.0
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
+script = ExtResource("2_tfbvc")
+CURRENT_STATE = NodePath("PlayerIdleState")
+metadata/_custom_type_script = "uid://chd0osbkqdv3h"
+
+[node name="PlayerAirState" type="Node" parent="StateMachine"]
+script = ExtResource("3_heart")
+FRICTION = 0.0
+JUMP_STRENGTH = 0.0
+metadata/_custom_type_script = "uid://bkoe7q5cgphew"
+
+[node name="PlayerIdleState" type="Node" parent="StateMachine"]
+script = ExtResource("3_2k0nr")
+metadata/_custom_type_script = "uid://duxw0vqlnjm38"
+
+[node name="PlayerWalkingState" type="Node" parent="StateMachine"]
+script = ExtResource("3_boijd")
+metadata/_custom_type_script = "uid://823kwjmherto"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("")

@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://c015jxoulxjfx"]
+
+[ext_resource type="Script" uid="uid://b31obm31ytlql" path="res://game.gd" id="1_80nbo"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_80nbo"]
+font_size = 100
+
+[node name="Game" type="Node"]
+script = ExtResource("1_80nbo")
+metadata/_custom_type_script = "uid://b31obm31ytlql"
+
+[node name="Gameplay" type="CanvasLayer" parent="."]
+
+[node name="Menus" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Menus"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Menus/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "FOO
+BAR"
+label_settings = SubResource("LabelSettings_80nbo")
+horizontal_alignment = 1
+vertical_alignment = 1
