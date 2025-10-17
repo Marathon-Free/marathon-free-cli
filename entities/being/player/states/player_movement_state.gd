@@ -13,7 +13,8 @@ var ANIM_PLAYER: AnimationPlayer
 #var JUMP_STRENGTH := 7.0
 
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	# Mouse mode is controlled by game script now
+	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	assert(owner is PlayerBody3D)
 	await owner.ready
 	PLAYER = owner

@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=3 uid="uid://c015jxoulxjfx"]
+
+[ext_resource type="Script" uid="uid://b31obm31ytlql" path="res://menu/game.gd" id="1_2m8gc"]
+[ext_resource type="Script" uid="uid://bbk0yowx0slf1" path="res://menu/menu_manager.gd" id="2_i8nt4"]
+[ext_resource type="Script" uid="uid://cj6gklfs8yqta" path="res://menu/main_menu.gd" id="3_nlndx"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_2m8gc")
+metadata/_custom_type_script = "uid://b31obm31ytlql"
+
+[node name="Gameplay" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Menus" type="CanvasLayer" parent="."]
+
+[node name="MenuManager" type="Control" parent="Menus"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_i8nt4")
+metadata/_custom_type_script = "uid://bbk0yowx0slf1"
+
+[node name="MainMenu" type="Control" parent="Menus/MenuManager"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_nlndx")
+metadata/_custom_type_script = "uid://c1g8cycc4l0ft"
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menus/MenuManager/MainMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Resume" type="Button" parent="Menus/MenuManager/MainMenu/VBoxContainer"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+text = "Resume"
+
+[node name="Options" type="Button" parent="Menus/MenuManager/MainMenu/VBoxContainer"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+text = "Options"
+
+[node name="TestMap" type="Button" parent="Menus/MenuManager/MainMenu/VBoxContainer"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+text = "Test Map
+"
+
+[node name="Quit" type="Button" parent="Menus/MenuManager/MainMenu/VBoxContainer"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+text = "Quit
+"
+
+[connection signal="pressed" from="Menus/MenuManager/MainMenu/VBoxContainer/Resume" to="." method="menu_off"]
+[connection signal="pressed" from="Menus/MenuManager/MainMenu/VBoxContainer/TestMap" to="Menus/MenuManager/MainMenu" method="test_map"]

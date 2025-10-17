@@ -2,8 +2,8 @@ class_name Menu extends Control
 
 signal transition(menu: StringName)
 
-func start() -> void:
+func enter() -> void:
 	return
 
-func stop() -> void:
+func exit() -> void:
 	return
