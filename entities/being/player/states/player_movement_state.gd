@@ -4,8 +4,8 @@ var PLAYER: PlayerBody3D
 var ANIM_PLAYER: AnimationPlayer
 
 @export_range(0, 20, 0.2) var SPEED := 7.0
-@export_range(0, 1, 0.01) var ACCELERATION := 0.7
-@export_range(0, 1, 0.01) var FRICTION := 1.0
+@export_range(0, 2, 0.01) var ACCELERATION := 0.7
+@export_range(0, 2, 0.01) var FRICTION := 1.0
 @export_range(0, 10, 0.2) var JUMP_STRENGTH := 7.0
 #var SPEED := 7.0
 #var ACCELERATION := 0.7
@@ -34,7 +34,7 @@ func move(delta := 1.0) -> void:
 	
 	var lraxis := Input.get_axis("player_move_left", "player_move_right")
 	var fbaxis := Input.get_axis("player_move_fowards", "player_move_backwards")
-	var direction := (PLAYER.CAMERA.global_transform.basis.x * lraxis + PLAYER.CAMERA.global_transform.basis.z * fbaxis)
+	var direction := (PLAYER.PIVOT_X.global_transform.basis.x * lraxis + PLAYER.PIVOT_Y.global_transform.basis.z * fbaxis)
 	if direction.length() > 1: direction = direction.normalized()
 	
 	var velaccel = velocity.lerp(direction * SPEED, ACCELERATION * delta)
@@ -52,17 +52,15 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func update(delta: float) -> void:
 	look(
-		Input.get_vector(&"player_look_right", &"player_look_left", &"player_look_down", &"player_look_up") * delta, 
+		-Input.get_vector(&"player_look_left", &"player_look_right", &"player_look_up", &"player_look_down") * delta, 
 		true)
 
 func look(mouse_movement: Vector2, is_controller := false) -> void:
-	var sensitivity := 9.0
-	var controller_sensitivity := 2.0
 	if is_controller:
-		PLAYER.PIVOT_X.rotate_x(mouse_movement.y * controller_sensitivity)
+		PLAYER.PIVOT_X.rotate_x(mouse_movement.y * Global.controller_sensitivity)
 		PLAYER.PIVOT_X.rotation.x = clampf(PLAYER.PIVOT_X.rotation.x, -1.5708, 1.5708)
-		PLAYER.PIVOT_Y.rotate_y(mouse_movement.x * controller_sensitivity)
+		PLAYER.PIVOT_Y.rotate_y(mouse_movement.x * Global.controller_sensitivity)
 		return
-	PLAYER.PIVOT_X.rotate_x(mouse_movement.y * sensitivity)
+	PLAYER.PIVOT_X.rotate_x(mouse_movement.y * Global.mouse_sensitivity)
 	PLAYER.PIVOT_X.rotation.x = clampf(PLAYER.PIVOT_X.rotation.x, -1.5708, 1.5708)
-	PLAYER.PIVOT_Y.rotate_y(mouse_movement.x * sensitivity)
+	PLAYER.PIVOT_Y.rotate_y(mouse_movement.x * Global.mouse_sensitivity)

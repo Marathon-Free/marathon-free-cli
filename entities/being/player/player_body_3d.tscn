@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://difrqebur2kpc"]
+[gd_scene load_steps=8 format=3 uid="uid://difrqebur2kpc"]
 
 [ext_resource type="Script" uid="uid://jf7a08qqowx0" path="res://entities/being/player/player_body_3d.gd" id="1_02h5w"]
+[ext_resource type="Script" uid="uid://cgbpk171ln5e2" path="res://entities/being/player/hud/hud.gd" id="2_h8l83"]
 [ext_resource type="Script" uid="uid://chd0osbkqdv3h" path="res://scripts/state_machine.gd" id="2_tfbvc"]
 [ext_resource type="Script" uid="uid://duxw0vqlnjm38" path="res://entities/being/player/states/player_idle_state.gd" id="3_2k0nr"]
 [ext_resource type="Script" uid="uid://823kwjmherto" path="res://entities/being/player/states/player_walking_state.gd" id="3_boijd"]
@@ -11,6 +12,10 @@
 [node name="PlayerBody3D" type="CharacterBody3D"]
 script = ExtResource("1_02h5w")
 metadata/_custom_type_script = "uid://jf7a08qqowx0"
+
+[node name="Hud" type="CanvasLayer" parent="."]
+script = ExtResource("2_h8l83")
+metadata/_custom_type_script = "uid://cgbpk171ln5e2"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_lko6g")
@@ -25,23 +30,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 fov = 90.0
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
+[node name="MovementStateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
 script = ExtResource("2_tfbvc")
 CURRENT_STATE = NodePath("PlayerIdleState")
 metadata/_custom_type_script = "uid://chd0osbkqdv3h"
 
-[node name="PlayerAirState" type="Node" parent="StateMachine"]
+[node name="PlayerAirState" type="Node" parent="MovementStateMachine"]
 script = ExtResource("3_heart")
 FRICTION = 0.0
 JUMP_STRENGTH = 0.0
 metadata/_custom_type_script = "uid://bkoe7q5cgphew"
 
-[node name="PlayerIdleState" type="Node" parent="StateMachine"]
+[node name="PlayerIdleState" type="Node" parent="MovementStateMachine"]
 script = ExtResource("3_2k0nr")
 metadata/_custom_type_script = "uid://duxw0vqlnjm38"
 
-[node name="PlayerWalkingState" type="Node" parent="StateMachine"]
+[node name="PlayerWalkingState" type="Node" parent="MovementStateMachine"]
 script = ExtResource("3_boijd")
+FRICTION = 2.0
 metadata/_custom_type_script = "uid://823kwjmherto"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

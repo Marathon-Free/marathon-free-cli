@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://c015jxoulxjfx"]
+[gd_scene load_steps=6 format=3 uid="uid://c015jxoulxjfx"]
 
 [ext_resource type="Script" uid="uid://b31obm31ytlql" path="res://menu/game.gd" id="1_2m8gc"]
 [ext_resource type="Script" uid="uid://bbk0yowx0slf1" path="res://menu/menu_manager.gd" id="2_i8nt4"]
 [ext_resource type="Script" uid="uid://cj6gklfs8yqta" path="res://menu/main_menu.gd" id="3_nlndx"]
+[ext_resource type="Script" uid="uid://cam8triwepaik" path="res://menu/options_menu.gd" id="4_i8nt4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i8nt4"]
+font_size = 128
 
 [node name="Game" type="Node"]
 script = ExtResource("1_2m8gc")
@@ -72,5 +76,21 @@ layout_mode = 2
 text = "Quit
 "
 
+[node name="OptionsMenu" type="Control" parent="Menus/MenuManager"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_i8nt4")
+metadata/_custom_type_script = "uid://c1g8cycc4l0ft"
+
+[node name="Label" type="Label" parent="Menus/MenuManager/OptionsMenu"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "TEST TEXT"
+label_settings = SubResource("LabelSettings_i8nt4")
+
 [connection signal="pressed" from="Menus/MenuManager/MainMenu/VBoxContainer/Resume" to="." method="menu_off"]
+[connection signal="pressed" from="Menus/MenuManager/MainMenu/VBoxContainer/Options" to="Menus/MenuManager/MainMenu" method="options"]
 [connection signal="pressed" from="Menus/MenuManager/MainMenu/VBoxContainer/TestMap" to="Menus/MenuManager/MainMenu" method="test_map"]
+[connection signal="pressed" from="Menus/MenuManager/MainMenu/VBoxContainer/Quit" to="Menus/MenuManager/MainMenu" method="quit"]

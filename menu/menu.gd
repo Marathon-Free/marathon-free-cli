@@ -1,6 +1,6 @@
 class_name Menu extends Control
 
-signal transition(menu: StringName)
+signal transition(menu: StringName, fowards: bool)
 
 func enter() -> void:
 	return

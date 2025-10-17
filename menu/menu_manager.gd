@@ -8,6 +8,7 @@ var prev_menus: Array[Menu] = []
 func _ready() -> void:
 	load_menus()
 	c_menu = menus[0]
+	c_menu.transition.connect(switch_menu_by_name)
 	c_menu.enter()
 	c_menu.visible = true
 	#print(c_menu.name)
@@ -28,7 +29,9 @@ func switch_menu(menu: Menu, fowards := false) -> void:
 	if fowards: prev_menus.append(c_menu)
 	c_menu.visible = false
 	c_menu.exit()
+	c_menu.transition.disconnect(switch_menu_by_name)
 	c_menu = menu
+	c_menu.transition.connect(switch_menu_by_name)
 	c_menu.enter()
 	c_menu.visible = true
 
