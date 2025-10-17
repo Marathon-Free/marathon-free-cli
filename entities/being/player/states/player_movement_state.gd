@@ -29,11 +29,11 @@ func move(delta := 1.0) -> void:
 	if not PLAYER.is_on_floor():
 		velocity += PLAYER.get_gravity() * delta
 	
-	if Input.is_action_just_pressed("player_jump") or Input.is_action_just_released("player_jump"):
+	if Input.is_action_just_pressed(&"player_jump"):
 		velocity += JUMP_STRENGTH * PLAYER.global_transform.basis.y
 	
-	var lraxis := Input.get_axis("player_move_left", "player_move_right")
-	var fbaxis := Input.get_axis("player_move_fowards", "player_move_backwards")
+	var lraxis := Input.get_axis(&"player_move_left", &"player_move_right")
+	var fbaxis := Input.get_axis(&"player_move_fowards", &"player_move_backwards")
 	var direction := (PLAYER.PIVOT_X.global_transform.basis.x * lraxis + PLAYER.PIVOT_Y.global_transform.basis.z * fbaxis)
 	if direction.length() > 1: direction = direction.normalized()
 	
@@ -48,12 +48,13 @@ func move(delta := 1.0) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		# Mouse
 		look(-event.relative/10000)
 
 func update(delta: float) -> void:
-	look(
-		-Input.get_vector(&"player_look_left", &"player_look_right", &"player_look_up", &"player_look_down") * delta, 
-		true)
+	# Controller
+	var look_dir := -Input.get_vector(&"player_look_left", &"player_look_right", &"player_look_up", &"player_look_down")
+	if look_dir: look(look_dir * delta, true)
 
 func look(mouse_movement: Vector2, is_controller := false) -> void:
 	if is_controller:
