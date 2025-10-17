@@ -23,6 +23,7 @@ func switch_menu_by_name(m_name: StringName, fowards := false) -> void:
 	for menu in menus:
 		if menu.name == m_name: 
 			switch_menu(menu, fowards)
+			return
 	push_error(name + ": menu \"" + m_name + "\" not found")
 
 func switch_menu(menu: Menu, fowards := false) -> void:

@@ -10,6 +10,7 @@ var c_level: Level
 
 func _ready() -> void:
 	Global.open_level.connect(open_level)
+	print(Global.vsync, DisplayServer.window_get_vsync_mode())
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_released("menu"):
