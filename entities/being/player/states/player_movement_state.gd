@@ -29,7 +29,7 @@ func move(delta := 1.0) -> void:
 	if not PLAYER.is_on_floor():
 		velocity += PLAYER.get_gravity() * delta
 	
-	if Input.is_action_just_pressed("player_jump"):
+	if Input.is_action_just_pressed("player_jump") or Input.is_action_just_released("player_jump"):
 		velocity += JUMP_STRENGTH * PLAYER.global_transform.basis.y
 	
 	var lraxis := Input.get_axis("player_move_left", "player_move_right")
@@ -48,12 +48,21 @@ func move(delta := 1.0) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		look(-event.relative)
+		look(-event.relative/10000)
 
-func look(mouse_movement: Vector2) -> void:	
-	var user_sensitivity := 9.0
-	var sensitivity := user_sensitivity/10000
-	
+func update(delta: float) -> void:
+	look(
+		Input.get_vector(&"player_look_right", &"player_look_left", &"player_look_down", &"player_look_up") * delta, 
+		true)
+
+func look(mouse_movement: Vector2, is_controller := false) -> void:
+	var sensitivity := 9.0
+	var controller_sensitivity := 2.0
+	if is_controller:
+		PLAYER.PIVOT_X.rotate_x(mouse_movement.y * controller_sensitivity)
+		PLAYER.PIVOT_X.rotation.x = clampf(PLAYER.PIVOT_X.rotation.x, -1.5708, 1.5708)
+		PLAYER.PIVOT_Y.rotate_y(mouse_movement.x * controller_sensitivity)
+		return
 	PLAYER.PIVOT_X.rotate_x(mouse_movement.y * sensitivity)
 	PLAYER.PIVOT_X.rotation.x = clampf(PLAYER.PIVOT_X.rotation.x, -1.5708, 1.5708)
 	PLAYER.PIVOT_Y.rotate_y(mouse_movement.x * sensitivity)
