@@ -18,14 +18,14 @@ metadata/_custom_type_script = "uid://i4qpknythgsc"
 
 [node name="Geometry" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry"]
+[node name="GroundMesh" type="MeshInstance3D" parent="Geometry"]
 mesh = SubResource("PlaneMesh_u8ecf")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_jqvng")
 
-[node name="Ground" type="StaticBody3D" parent="Geometry/MeshInstance3D"]
+[node name="GroundCollision" type="StaticBody3D" parent="Geometry/GroundMesh"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/MeshInstance3D/Ground"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/GroundMesh/GroundCollision"]
 shape = SubResource("WorldBoundaryShape3D_umreq")
 
 [node name="Env" type="Node3D" parent="."]

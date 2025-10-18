@@ -18,7 +18,7 @@ func _ready() -> void:
 	assert(owner is PlayerBody3D)
 	await owner.ready
 	PLAYER = owner
-	ANIM_PLAYER = PLAYER.ANIM_PLAYER
+	ANIM_PLAYER = PLAYER.MOVEMENT_PLAYER
 
 func grav_rotate() -> void:
 	pass

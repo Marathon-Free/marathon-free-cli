@@ -1,6 +1,7 @@
 class_name PlayerBody3D extends CharacterBody3D
 
-@onready var ANIM_PLAYER := $AnimationPlayer as AnimationPlayer
+@onready var MOVEMENT_PLAYER := $MovementPlayer as AnimationPlayer
+@onready var STANCE_PLAYER := $StancePlayer as AnimationPlayer
 @onready var PIVOT_Y := $PivotY as Node3D
 @onready var PIVOT_X := $PivotY/PivotX as Node3D
 @onready var CAMERA := $PivotY/PivotX/Camera3D as Camera3D

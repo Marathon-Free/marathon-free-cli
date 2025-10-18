@@ -3,6 +3,8 @@ class_name StateMachine extends Node
 @export var CURRENT_STATE: State
 var states: Dictionary[StringName,State] = {}
 
+@export var SHAPE_CAST: ShapeCast3D
+
 func _ready() -> void:
 	# Store children in <states>
 	for child in get_children():

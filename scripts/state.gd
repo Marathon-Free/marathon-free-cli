@@ -16,3 +16,7 @@ func phys_update(delta: float) -> void:
 @warning_ignore("unused_parameter")
 func update(delta: float) -> void:
 	pass
+
+## Returns whether this state is still the current state of it's state machine.
+func is_active() -> bool:
+	return ($".." as StateMachine).CURRENT_STATE == self

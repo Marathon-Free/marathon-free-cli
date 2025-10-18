@@ -1,15 +1,83 @@
-[gd_scene load_steps=8 format=3 uid="uid://difrqebur2kpc"]
+[gd_scene load_steps=14 format=3 uid="uid://difrqebur2kpc"]
 
 [ext_resource type="Script" uid="uid://jf7a08qqowx0" path="res://entities/being/player/player_body_3d.gd" id="1_02h5w"]
 [ext_resource type="Script" uid="uid://cgbpk171ln5e2" path="res://entities/being/player/hud/hud.gd" id="2_h8l83"]
 [ext_resource type="Script" uid="uid://chd0osbkqdv3h" path="res://scripts/state_machine.gd" id="2_tfbvc"]
-[ext_resource type="Script" uid="uid://duxw0vqlnjm38" path="res://entities/being/player/states/player_idle_state.gd" id="3_2k0nr"]
-[ext_resource type="Script" uid="uid://823kwjmherto" path="res://entities/being/player/states/player_walking_state.gd" id="3_boijd"]
-[ext_resource type="Script" uid="uid://bkoe7q5cgphew" path="res://entities/being/player/states/player_air_state.gd" id="3_heart"]
+[ext_resource type="Script" uid="uid://duxw0vqlnjm38" path="res://entities/being/player/movement_states/player_idle_state.gd" id="3_2k0nr"]
+[ext_resource type="Script" uid="uid://823kwjmherto" path="res://entities/being/player/movement_states/player_walking_state.gd" id="3_boijd"]
+[ext_resource type="Script" uid="uid://bkoe7q5cgphew" path="res://entities/being/player/movement_states/player_air_state.gd" id="3_heart"]
+[ext_resource type="Script" uid="uid://bo7b5igh2gxdk" path="res://entities/being/player/stance_states/player_crouched_state.gd" id="7_x7cpu"]
+[ext_resource type="Script" uid="uid://bk06qh0e75m5g" path="res://entities/being/player/stance_states/player_standing_state.gd" id="8_rngef"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lko6g"]
+radius = 0.48394775
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rngef"]
+height = 1.0
+
+[sub_resource type="Animation" id="Animation_x7cpu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_h8l83"]
+resource_name = "crouch"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.5, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rngef"]
+_data = {
+&"RESET": SubResource("Animation_x7cpu"),
+&"crouch": SubResource("Animation_h8l83")
+}
 
 [node name="PlayerBody3D" type="CharacterBody3D"]
+collision_layer = 12
+collision_mask = 15
 script = ExtResource("1_02h5w")
 metadata/_custom_type_script = "uid://jf7a08qqowx0"
 
@@ -19,6 +87,11 @@ metadata/_custom_type_script = "uid://cgbpk171ln5e2"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_lko6g")
+
+[node name="CrouchCast" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_rngef")
+target_position = Vector3(0, 1, 0)
 
 [node name="PivotY" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -50,5 +123,23 @@ script = ExtResource("3_boijd")
 FRICTION = 2.0
 metadata/_custom_type_script = "uid://823kwjmherto"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("")
+[node name="StanceStateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
+script = ExtResource("2_tfbvc")
+CURRENT_STATE = NodePath("PlayerStandingState")
+metadata/_custom_type_script = "uid://chd0osbkqdv3h"
+
+[node name="PlayerCrouchedState" type="Node" parent="StanceStateMachine" node_paths=PackedStringArray("CROUCH_CAST")]
+script = ExtResource("7_x7cpu")
+CROUCH_CAST = NodePath("../../CrouchCast")
+metadata/_custom_type_script = "uid://bo7b5igh2gxdk"
+
+[node name="PlayerStandingState" type="Node" parent="StanceStateMachine"]
+script = ExtResource("8_rngef")
+metadata/_custom_type_script = "uid://bk06qh0e75m5g"
+
+[node name="MovementPlayer" type="AnimationPlayer" parent="."]
+
+[node name="StancePlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_rngef")
+}
