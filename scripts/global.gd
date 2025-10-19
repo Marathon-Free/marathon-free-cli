@@ -3,6 +3,8 @@ extends Node
 var pausable := true
 var mouse_sensitivity := 9.0
 var controller_sensitivity := 3.0
+var default_fov := 90.0
+
 var vsync:int:
 	set(v):
 		vsync = v

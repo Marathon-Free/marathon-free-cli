@@ -13,10 +13,5 @@ visible = false
 [node name="Menus" type="CanvasLayer" parent="."]
 
 [node name="MenuManager" parent="Menus" instance=ExtResource("2_ih7oe")]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [connection signal="menu_toggle" from="Menus/MenuManager" to="." method="toggle_menu"]

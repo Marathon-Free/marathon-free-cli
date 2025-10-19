@@ -29,4 +29,4 @@ func point_held_item(global_point: Vector3, delta: float) -> void:
 	
 	MOVEMENT_PIVOT.global_rotate(axis, lerpf(0.0, angle, 2*delta))
 	MOVEMENT_PIVOT.rotation.z = 0
-	print(MOVEMENT_PIVOT.global_rotation)
+	#print(MOVEMENT_PIVOT.global_rotation)
