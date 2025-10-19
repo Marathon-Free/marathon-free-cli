@@ -15,10 +15,15 @@ enum input_type {
 
 func _ready() -> void:
 	mouse_sens_slider.value = Global.mouse_sensitivity
+	mouse_sens_slider.value_changed.connect(_on_mouse_slider_value_changed)
 	mouse_sens_spin_box.value = Global.mouse_sensitivity
+	mouse_sens_spin_box.value_changed.connect(_on_mouse_box_value_changed)
 	controller_sens_slider.value = Global.controller_sensitivity
+	controller_sens_slider.value_changed.connect(_on_stick_slider_value_changed)
 	controller_sens_spin_box.value = Global.controller_sensitivity
+	controller_sens_spin_box.value_changed.connect(_on_stick_box_value_changed)
 	v_sync_options.selected = Global.vsync
+	v_sync_options.item_selected.connect(_on_v_sync_options_item_selected)
 
 func set_mouse_sensitivity(value: float, source: input_type) -> void:
 	Global.mouse_sensitivity = value
@@ -60,17 +65,10 @@ func _on_stick_box_value_changed(value: float) -> void:
 	Global.controller_sensitivity = value
 	controller_sens_slider.value = value
 
-#func _on_v_sync_toggle_toggled(toggled_on: bool) -> void:
-	#DisplayServer.window_set_vsync_mode()
-
 func _on_v_sync_options_item_selected(index: int) -> void:
 	match index:
-		0:
-			Global.vsync = DisplayServer.VSYNC_DISABLED
-		1:
-			Global.vsync = DisplayServer.VSYNC_ENABLED
-		2:
-			Global.vsync = DisplayServer.VSYNC_ADAPTIVE
-		3:
-			Global.vsync = DisplayServer.VSYNC_MAILBOX
+		0: Global.vsync = DisplayServer.VSYNC_DISABLED
+		1: Global.vsync = DisplayServer.VSYNC_ENABLED
+		2: Global.vsync = DisplayServer.VSYNC_ADAPTIVE
+		3: Global.vsync = DisplayServer.VSYNC_MAILBOX
 	print(Global.vsync, DisplayServer.window_get_vsync_mode())

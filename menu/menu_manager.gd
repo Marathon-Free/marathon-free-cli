@@ -1,5 +1,7 @@
 class_name MenuManager extends Control
 
+signal menu_toggle()
+
 # Current menu
 var c_menu: Menu
 var menus: Array[Menu] = []
@@ -38,7 +40,9 @@ func switch_menu(menu: Menu, fowards := false) -> void:
 
 func back_menu() -> void:
 	var menu_pos := prev_menus.size() - 1
-	if menu_pos < 0: return
+	if menu_pos < 0: 
+		menu_toggle.emit()
+		return
 	var menu := prev_menus[menu_pos]
 	prev_menus.remove_at(menu_pos)
 	switch_menu(menu)

@@ -20,6 +20,8 @@ func _ready() -> void:
 	PLAYER = owner
 	ANIM_PLAYER = PLAYER.MOVEMENT_PLAYER
 
+## If/when it is decided to implement different angles of gravity, 
+## this is where the rotation would happen
 func grav_rotate() -> void:
 	pass
 
@@ -32,6 +34,7 @@ func move(delta := 1.0) -> void:
 	if Input.is_action_just_pressed(&"player_jump"):
 		velocity += JUMP_STRENGTH * PLAYER.global_transform.basis.y
 	
+	# This movement direction works, even if the player is rotated (Like to match the gravity)
 	var lraxis := Input.get_axis(&"player_move_left", &"player_move_right")
 	var fbaxis := Input.get_axis(&"player_move_fowards", &"player_move_backwards")
 	var direction := (PLAYER.PIVOT_X.global_transform.basis.x * lraxis + PLAYER.PIVOT_Y.global_transform.basis.z * fbaxis)

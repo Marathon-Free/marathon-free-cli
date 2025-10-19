@@ -6,7 +6,11 @@
 
 [node name="MenuManager" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_1g6bs")
 metadata/_custom_type_script = "uid://bbk0yowx0slf1"
 
@@ -107,11 +111,6 @@ popup/item_2/id = 2
 popup/item_3/text = "Mailbox"
 popup/item_3/id = 3
 
-[node name="VSyncToggle" type="CheckButton" parent="OptionsMenu/HBoxContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "VSync"
-
 [node name="AnisotropicFiltering" type="Label" parent="OptionsMenu/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Anisotropic Filtering"
@@ -187,7 +186,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Third Column"
 
+[connection signal="pressed" from="MainMenu/VBoxContainer/Resume" to="." method="back_menu"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/Options" to="MainMenu" method="options"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/TestMap" to="MainMenu" method="test_map"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/Quit" to="MainMenu" method="quit"]
-[connection signal="item_selected" from="OptionsMenu/HBoxContainer/VBoxContainer/VSyncOptions" to="OptionsMenu" method="_on_v_sync_options_item_selected"]

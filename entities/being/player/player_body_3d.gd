@@ -5,6 +5,7 @@ class_name PlayerBody3D extends CharacterBody3D
 @onready var PIVOT_Y := $PivotY as Node3D
 @onready var PIVOT_X := $PivotY/PivotX as Node3D
 @onready var CAMERA := $PivotY/PivotX/Camera3D as Camera3D
+@onready var RAY_CAST := $PivotY/PivotX/Camera3D/RayCast3D as RayCast3D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -16,4 +17,6 @@ func _ready() -> void:
 	#print("Ready")
 
 func _physics_process(_delta: float) -> void:
-	pass
+	RAY_CAST.
+	
+	return

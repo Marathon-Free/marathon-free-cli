@@ -16,7 +16,8 @@ func phys_update(_delta: float) -> void:
 	if Input.is_action_just_released("crouch_hold"): trying_to_crouch = false
 	if Input.is_action_just_pressed("crouch_toggle"): trying_to_crouch = !trying_to_crouch
 	
-	print(trying_to_crouch, " // ",  CROUCH_CAST.is_colliding())
+	# Test whether the crouch logic is working.
+	#print(trying_to_crouch, " // ",  CROUCH_CAST.is_colliding())
 	
 	if !(trying_to_crouch or CROUCH_CAST.is_colliding()):
 		transition.emit("PlayerStandingState")
