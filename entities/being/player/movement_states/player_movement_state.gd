@@ -61,10 +61,10 @@ func update(delta: float) -> void:
 
 func look(mouse_movement: Vector2, is_controller := false) -> void:
 	if is_controller:
-		PLAYER.PIVOT_X.rotate_x(mouse_movement.y * Global.controller_sensitivity)
+		PLAYER.PIVOT_X.rotate_x(mouse_movement.y * Global.controller_sensitivity * Global.sens_multi)
 		PLAYER.PIVOT_X.rotation.x = clampf(PLAYER.PIVOT_X.rotation.x, -1.5708, 1.5708)
-		PLAYER.PIVOT_Y.rotate_y(mouse_movement.x * Global.controller_sensitivity)
+		PLAYER.PIVOT_Y.rotate_y(mouse_movement.x * Global.controller_sensitivity * Global.sens_multi)
 		return
-	PLAYER.PIVOT_X.rotate_x(mouse_movement.y * Global.mouse_sensitivity)
+	PLAYER.PIVOT_X.rotate_x(mouse_movement.y * Global.mouse_sensitivity * Global.sens_multi)
 	PLAYER.PIVOT_X.rotation.x = clampf(PLAYER.PIVOT_X.rotation.x, -1.5708, 1.5708)
-	PLAYER.PIVOT_Y.rotate_y(mouse_movement.x * Global.mouse_sensitivity)
+	PLAYER.PIVOT_Y.rotate_y(mouse_movement.x * Global.mouse_sensitivity * Global.sens_multi)

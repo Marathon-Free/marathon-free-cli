@@ -9,3 +9,4 @@ class_name HeldItem extends Resource
 @export var offset :=  Vector3(0.6, -0.3, -0.4)
 @export var rotation: Vector3
 @export var scale := Vector3(1, 1, 1)
+@export var recoil: Animation

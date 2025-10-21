@@ -109,6 +109,13 @@ fov = 90.0
 [node name="RayCast3D" type="RayCast3D" parent="PivotY/PivotX/Camera3D"]
 target_position = Vector3(0, 0, -2000)
 
+[node name="MovementPlayer" type="AnimationPlayer" parent="."]
+
+[node name="StancePlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_rngef")
+}
+
 [node name="MovementStateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
 script = ExtResource("2_tfbvc")
 CURRENT_STATE = NodePath("PlayerIdleState")
@@ -142,10 +149,3 @@ metadata/_custom_type_script = "uid://bo7b5igh2gxdk"
 [node name="PlayerStandingState" type="Node" parent="StanceStateMachine"]
 script = ExtResource("8_rngef")
 metadata/_custom_type_script = "uid://bk06qh0e75m5g"
-
-[node name="MovementPlayer" type="AnimationPlayer" parent="."]
-
-[node name="StancePlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_rngef")
-}

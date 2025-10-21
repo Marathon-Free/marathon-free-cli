@@ -1,22 +1,174 @@
-[gd_scene load_steps=4 format=3 uid="uid://dr83x14gao36m"]
+[gd_scene load_steps=7 format=3 uid="uid://dr83x14gao36m"]
 
 [ext_resource type="Script" uid="uid://cecgf1qvyonwd" path="res://entities/being/player/view_model/view_model.gd" id="1_cpcji"]
 [ext_resource type="Resource" uid="uid://p35ki3nmv01b" path="res://data/held_item/magnum.tres" id="2_g6tde"]
 [ext_resource type="ArrayMesh" uid="uid://dnamp2d3bj8nk" path="res://assets/weapons/marathon_pistol_45_magnum_mega/marathon_pistol_45_magnum_mega.tres" id="3_4n7t2"]
 
-[node name="ViewModel" type="Node3D" node_paths=PackedStringArray("MOVEMENT_PIVOT", "RECOIL_PIVOT", "MESH_INSTANCE")]
+[sub_resource type="Animation" id="Animation_4n7t2"]
+resource_name = "default_recoil"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MovementPivot/HandPivot/RecoilPivot:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.083333336, 0, 0, 0, 0, -0.083333336, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MovementPivot/HandPivot/RecoilPivot:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0, 0.047570202, 0.078212894, -0.066685215, 0, 0.06666666, 0, 0, -0.267, 0, 0.033333734, 0),
+"times": PackedFloat32Array(0, 0.3, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MovementPivot/HandPivot/RecoilPivot:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0, 0.13114119, 0.14506969, -0.06666667, 0, 0.06666666, 0, -0.00042173686, -0.067, 0, 0.17389749, 0),
+"times": PackedFloat32Array(0, 0.3, 1)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MovementPivot/HandPivot/RecoilPivot:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0, 0.18824802, 0.18546233, -0.06666668, 0, 0.066666655, 0, 0, -0.03333336, 0.00021331245, 0, 0),
+"times": PackedFloat32Array(0, 0.3, 1)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MovementPivot/HandPivot/RecoilPivot:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.083333336, 0, 0, 0, 0, -0.083333336, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3, 1)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MovementPivot/HandPivot/RecoilPivot:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.083333336, 0, 0, 0, 0, -0.083333336, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3, 1)
+}
+
+[sub_resource type="Animation" id="Animation_41qto"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MovementPivot/HandPivot/RecoilPivot:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MovementPivot/HandPivot/RecoilPivot:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MovementPivot/HandPivot/RecoilPivot:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MovementPivot/HandPivot/RecoilPivot:position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MovementPivot/HandPivot/RecoilPivot:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MovementPivot/HandPivot/RecoilPivot:position:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_41qto"]
+_data = {
+&"RESET": SubResource("Animation_41qto"),
+&"default_recoil": SubResource("Animation_4n7t2")
+}
+
+[node name="ViewModel" type="Node3D" node_paths=PackedStringArray("MOVEMENT_PIVOT", "HAND_PIVOT", "RECOIL_PIVOT", "MESH_INSTANCE")]
 script = ExtResource("1_cpcji")
 MOVEMENT_PIVOT = NodePath("MovementPivot")
-RECOIL_PIVOT = NodePath("MovementPivot/RecoilPivot")
-MESH_INSTANCE = NodePath("MovementPivot/RecoilPivot/MeshInstance3D")
-HELD_ITEM = ExtResource("2_g6tde")
+HAND_PIVOT = NodePath("MovementPivot/HandPivot")
+RECOIL_PIVOT = NodePath("MovementPivot/HandPivot/RecoilPivot")
+MESH_INSTANCE = NodePath("MovementPivot/HandPivot/RecoilPivot/MeshInstance3D")
+held_item = ExtResource("2_g6tde")
 metadata/_custom_type_script = "uid://cecgf1qvyonwd"
 
 [node name="MovementPivot" type="Node3D" parent="."]
+
+[node name="HandPivot" type="Node3D" parent="MovementPivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.3, -0.4)
 
-[node name="RecoilPivot" type="Node3D" parent="MovementPivot"]
+[node name="RecoilPivot" type="Node3D" parent="MovementPivot/HandPivot"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MovementPivot/RecoilPivot"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MovementPivot/HandPivot/RecoilPivot"]
 mesh = ExtResource("3_4n7t2")
-skeleton = NodePath("../../..")
+skeleton = NodePath("../../../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_41qto")
+}

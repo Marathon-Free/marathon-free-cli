@@ -37,9 +37,11 @@ func _physics_process(delta: float) -> void:
 
 func zoom(delta: float) -> void:
 	# set zoom status
-	if Input.is_action_just_pressed("zoom_hold"):   is_zoomed = true
-	if Input.is_action_just_released("zoom_hold"):  is_zoomed = false
-	if Input.is_action_just_pressed("zoom_toggle"): is_zoomed = !is_zoomed
+	if Input.is_action_just_pressed(&"zoom_hold"):   is_zoomed = true
+	if Input.is_action_just_released(&"zoom_hold"):  is_zoomed = false
+	if Input.is_action_just_pressed(&"zoom_toggle"): is_zoomed = !is_zoomed
+	
+	Global.sens_multi = 0.5 if is_zoomed else 1.0
 	
 	var z_speed := 8.0				# Zoom Speed
 	var d_fov := Global.default_fov	# Default FOV
