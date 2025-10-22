@@ -16,8 +16,9 @@ var is_zoomed := false
 # Player controls, and much more, are in the state machine.
 
 func _ready() -> void:
-	pass
+	VIEW_MODEL.camera = CAMERA
 	#print("Ready")
+	return
 
 func _physics_process(delta: float) -> void:
 	var facing : Vector3
@@ -31,7 +32,7 @@ func _physics_process(delta: float) -> void:
 	
 	
 	
-	zoom(delta)
+	#zoom(delta)
 	
 	return
 
@@ -43,10 +44,10 @@ func zoom(delta: float) -> void:
 	
 	Global.sens_multi = 0.5 if is_zoomed else 1.0
 	
-	var z_speed := 8.0				# Zoom Speed
-	var d_fov := Global.default_fov	# Default FOV
-	var c_fov := CAMERA.fov			# Current Camera FOV
-	var t_fov : float				# FOV to switch to
+	var z_speed := 8.0              # Zoom Speed
+	var d_fov := Global.default_fov # Default FOV
+	var c_fov := CAMERA.fov         # Current Camera FOV
+	var t_fov : float               # FOV to switch to
 	
 	if is_zoomed: t_fov = lerpf(c_fov, d_fov / 2, delta * z_speed)
 	else: t_fov = lerpf(c_fov, d_fov, delta * z_speed)

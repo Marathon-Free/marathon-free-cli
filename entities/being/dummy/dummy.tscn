@@ -15,10 +15,10 @@ albedo_color = Color(1, 0.24, 0.24, 1)
 shape = SubResource("CylinderShape3D_ue4ke")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+visible = false
 mesh = SubResource("CylinderMesh_1u1u4")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="CollisionShape3D"]
-visible = false
 mesh = SubResource("CylinderMesh_1u1u4")
 surface_material_override/0 = SubResource("StandardMaterial3D_dkm2k")
 

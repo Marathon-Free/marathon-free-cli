@@ -6,12 +6,6 @@ var mouse_sensitivity := 9.0
 var controller_sensitivity := 3.0
 var default_fov := 90.0
 
-var vsync:int:
-	set(v):
-		vsync = v
-		DisplayServer.window_set_vsync_mode(v)
-
-
 signal open_level(level: Level)
 
 func load_level(level_scene: PackedScene) -> void:
@@ -20,4 +14,5 @@ func load_level(level_scene: PackedScene) -> void:
 	open_level.emit(level)
 
 func _ready() -> void:
-	vsync = DisplayServer.VSYNC_DISABLED
+	# Replace with loading from config file
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)

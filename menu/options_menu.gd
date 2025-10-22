@@ -22,7 +22,7 @@ func _ready() -> void:
 	controller_sens_slider.value_changed.connect(_on_stick_slider_value_changed)
 	controller_sens_spin_box.value = Global.controller_sensitivity
 	controller_sens_spin_box.value_changed.connect(_on_stick_box_value_changed)
-	v_sync_options.selected = Global.vsync
+	v_sync_options.selected = DisplayServer.window_get_vsync_mode()
 	v_sync_options.item_selected.connect(_on_v_sync_options_item_selected)
 
 func set_mouse_sensitivity(value: float, source: input_type) -> void:
@@ -67,8 +67,7 @@ func _on_stick_box_value_changed(value: float) -> void:
 
 func _on_v_sync_options_item_selected(index: int) -> void:
 	match index:
-		0: Global.vsync = DisplayServer.VSYNC_DISABLED
-		1: Global.vsync = DisplayServer.VSYNC_ENABLED
-		2: Global.vsync = DisplayServer.VSYNC_ADAPTIVE
-		3: Global.vsync = DisplayServer.VSYNC_MAILBOX
-	print(Global.vsync, DisplayServer.window_get_vsync_mode())
+		0: DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+		1: DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+		2: DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
+		3: DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_MAILBOX)

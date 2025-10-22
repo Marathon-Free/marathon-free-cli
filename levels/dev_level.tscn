@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bv1s2bi6tdapl"]
+[gd_scene load_steps=8 format=3 uid="uid://bv1s2bi6tdapl"]
 
 [ext_resource type="Texture2D" uid="uid://b8n36768il2e0" path="res://icon.svg" id="1_67lcr"]
 [ext_resource type="Script" uid="uid://i4qpknythgsc" path="res://levels/level.gd" id="1_jqvng"]
 [ext_resource type="PackedScene" uid="uid://difrqebur2kpc" path="res://entities/being/player/player_body_3d.tscn" id="2_u8ecf"]
+[ext_resource type="PackedScene" uid="uid://dgxkccbrve7pl" path="res://entities/being/dummy/dummy.tscn" id="4_a12e2"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_u8ecf"]
 size = Vector2(200, 200)
@@ -35,3 +36,6 @@ transform = Transform3D(1, 0, 0, 0, 0.9982399, 0.059306394, 0, -0.059306394, 0.9
 
 [node name="PlayerBody3D" parent="." instance=ExtResource("2_u8ecf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Dummy" parent="." instance=ExtResource("4_a12e2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -12)
