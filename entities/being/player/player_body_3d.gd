@@ -27,7 +27,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		facing = -1000 * CAMERA.global_transform.basis.z
 	
-	VIEW_MODEL.point_held_item(facing, delta)
+	VIEW_MODEL.facing_point = facing
+	VIEW_MODEL.point_held_item(delta)
 	#print(facing)
 	
 	
@@ -35,21 +36,3 @@ func _physics_process(delta: float) -> void:
 	#zoom(delta)
 	
 	return
-
-func zoom(delta: float) -> void:
-	# set zoom status
-	if Input.is_action_just_pressed(&"zoom_hold"):   is_zoomed = true
-	if Input.is_action_just_released(&"zoom_hold"):  is_zoomed = false
-	if Input.is_action_just_pressed(&"zoom_toggle"): is_zoomed = !is_zoomed
-	
-	Global.sens_multi = 0.5 if is_zoomed else 1.0
-	
-	var z_speed := 8.0              # Zoom Speed
-	var d_fov := Global.default_fov # Default FOV
-	var c_fov := CAMERA.fov         # Current Camera FOV
-	var t_fov : float               # FOV to switch to
-	
-	if is_zoomed: t_fov = lerpf(c_fov, d_fov / 2, delta * z_speed)
-	else: t_fov = lerpf(c_fov, d_fov, delta * z_speed)
-	if c_fov == t_fov: return
-	CAMERA.fov = t_fov

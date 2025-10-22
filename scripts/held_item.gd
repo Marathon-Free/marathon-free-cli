@@ -10,3 +10,5 @@ class_name HeldItem extends Resource
 @export var rotation: Vector3
 @export var scale := Vector3(1, 1, 1)
 @export var recoil: Animation
+@export_category("Attack")
+@export var refire_time := 0.5 

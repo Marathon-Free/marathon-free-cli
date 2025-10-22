@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://difrqebur2kpc"]
+[gd_scene load_steps=16 format=3 uid="uid://difrqebur2kpc"]
 
 [ext_resource type="Script" uid="uid://jf7a08qqowx0" path="res://entities/being/player/player_body_3d.gd" id="1_02h5w"]
 [ext_resource type="Script" uid="uid://cgbpk171ln5e2" path="res://entities/being/player/hud/hud.gd" id="2_h8l83"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://duxw0vqlnjm38" path="res://entities/being/player/movement_states/player_idle_state.gd" id="3_2k0nr"]
 [ext_resource type="Script" uid="uid://823kwjmherto" path="res://entities/being/player/movement_states/player_walking_state.gd" id="3_boijd"]
 [ext_resource type="Script" uid="uid://bkoe7q5cgphew" path="res://entities/being/player/movement_states/player_air_state.gd" id="3_heart"]
+[ext_resource type="Texture2D" uid="uid://b8n36768il2e0" path="res://icon.svg" id="3_i1jh8"]
 [ext_resource type="PackedScene" uid="uid://dr83x14gao36m" path="res://entities/being/player/view_model/view_model.tscn" id="3_njume"]
 [ext_resource type="Script" uid="uid://bo7b5igh2gxdk" path="res://entities/being/player/stance_states/player_crouched_state.gd" id="7_x7cpu"]
 [ext_resource type="Script" uid="uid://bk06qh0e75m5g" path="res://entities/being/player/stance_states/player_standing_state.gd" id="8_rngef"]
@@ -85,6 +86,21 @@ metadata/_custom_type_script = "uid://jf7a08qqowx0"
 [node name="Hud" type="CanvasLayer" parent="."]
 script = ExtResource("2_h8l83")
 metadata/_custom_type_script = "uid://cgbpk171ln5e2"
+
+[node name="TextureRect" type="TextureRect" parent="Hud"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_i1jh8")
+expand_mode = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_lko6g")

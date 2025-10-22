@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="HeldItem" load_steps=3 format=3 uid="uid://p35ki3nmv01b"]
+[gd_resource type="Resource" script_class="HeldItem" load_steps=4 format=3 uid="uid://p35ki3nmv01b"]
 
 [ext_resource type="ArrayMesh" uid="uid://dnamp2d3bj8nk" path="res://assets/weapons/marathon_pistol_45_magnum_mega/marathon_pistol_45_magnum_mega.tres" id="1_813mx"]
-[ext_resource type="Script" uid="uid://51qtdeanm8pb" path="res://scripts/held_item.gd" id="1_jr5eg"]
+[ext_resource type="Animation" uid="uid://cpxjs6et0dy8o" path="res://assets/weapons/marathon_pistol_45_magnum_mega/recoil_marathon_pistol_45_magnum_mega.res" id="2_0vc60"]
+[ext_resource type="Script" uid="uid://51qtdeanm8pb" path="res://scripts/held_item.gd" id="3_j68ee"]
 
 [resource]
-script = ExtResource("1_jr5eg")
+script = ExtResource("3_j68ee")
 name = &"45MagnumMegaClass"
 nice_name = ".45 Magnum Mega Class"
 mesh = ExtResource("1_813mx")
+recoil = ExtResource("2_0vc60")
 metadata/_custom_type_script = "uid://51qtdeanm8pb"
