@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dgxkccbrve7pl"]
+[gd_scene load_steps=6 format=3 uid="uid://dgxkccbrve7pl"]
+
+[ext_resource type="Script" uid="uid://c37e1g8ju7fgq" path="res://scripts/hitbox3d.gd" id="1_1u1u4"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ue4ke"]
 
@@ -22,7 +24,11 @@ mesh = SubResource("CylinderMesh_1u1u4")
 mesh = SubResource("CylinderMesh_1u1u4")
 surface_material_override/0 = SubResource("StandardMaterial3D_dkm2k")
 
-[node name="HitBox" type="Area3D" parent="."]
+[node name="HitBox3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_1u1u4")
+metadata/_custom_type_script = "uid://c37e1g8ju7fgq"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox3D"]
 shape = SubResource("CylinderShape3D_70pjl")

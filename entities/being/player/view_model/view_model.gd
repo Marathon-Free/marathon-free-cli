@@ -25,7 +25,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	zoom(delta)
-	print(REFIRE_TIMER.time_left)
+	#print(REFIRE_TIMER.time_left)
 	if Input.is_action_pressed(&"attack"): attack()
 
 func attack() -> void:
