@@ -55,6 +55,7 @@ func zoom(delta: float) -> void:
 	camera.fov = t_fov
 
 func load_held_item() -> void:
+	await ready
 	HAND_PIVOT.position = held_item.offset
 	MESH_INSTANCE.rotation = held_item.rotation
 	MESH_INSTANCE.scale = held_item.scale
