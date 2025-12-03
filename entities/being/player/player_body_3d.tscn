@@ -149,7 +149,6 @@ metadata/_custom_type_script = "uid://duxw0vqlnjm38"
 
 [node name="PlayerWalkingState" type="Node" parent="MovementStateMachine"]
 script = ExtResource("3_boijd")
-FRICTION = 2.0
 metadata/_custom_type_script = "uid://823kwjmherto"
 
 [node name="StanceStateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
@@ -160,8 +159,12 @@ metadata/_custom_type_script = "uid://chd0osbkqdv3h"
 [node name="PlayerCrouchedState" type="Node" parent="StanceStateMachine" node_paths=PackedStringArray("CROUCH_CAST")]
 script = ExtResource("7_x7cpu")
 CROUCH_CAST = NodePath("../../CrouchCast")
+SPEED_MULTIPLIER = 0.5
 metadata/_custom_type_script = "uid://bo7b5igh2gxdk"
 
 [node name="PlayerStandingState" type="Node" parent="StanceStateMachine"]
 script = ExtResource("8_rngef")
 metadata/_custom_type_script = "uid://bk06qh0e75m5g"
+
+[connection signal="new_state" from="MovementStateMachine" to="." method="_on_movement_state_machine_new_state"]
+[connection signal="new_state" from="StanceStateMachine" to="." method="_on_stance_state_machine_new_state"]

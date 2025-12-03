@@ -13,8 +13,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_released("menu"):
-		if menu_manager.prev_menus.is_empty(): toggle_menu()
-		else: menu_manager.back_menu()
+		menu_manager.back_menu()
 
 func open_level(level: Level) -> void:
 	if c_level: c_level.queue_free()

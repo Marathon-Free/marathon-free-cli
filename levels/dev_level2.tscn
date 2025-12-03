@@ -1,0 +1,97 @@
+[gd_scene load_steps=10 format=3 uid="uid://bj1ofej27rhxy"]
+
+[ext_resource type="PackedScene" uid="uid://difrqebur2kpc" path="res://entities/being/player/player_body_3d.tscn" id="1_1hl1m"]
+[ext_resource type="Script" uid="uid://i4qpknythgsc" path="res://levels/level.gd" id="1_y6vtj"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y6vtj"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lf6wb"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_x3a40"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_svsji"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_l46c4"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ifrl2"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_385rf"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[node name="DevLevel2" type="Node3D"]
+script = ExtResource("1_y6vtj")
+metadata/_custom_type_script = "uid://i4qpknythgsc"
+
+[node name="box" type="Node3D" parent="."]
+
+[node name="MeshInstance3D1" type="MeshInstance3D" parent="box"]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("PlaneMesh_y6vtj")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="box/MeshInstance3D1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="box/MeshInstance3D1/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_lf6wb")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="box"]
+transform = Transform3D(-4.3711384e-06, 4.371139e-08, 10, 100, -4.3711385e-08, 4.371139e-07, 4.3711393e-06, 0.99999994, -4.371139e-07, 0, 100, -10)
+mesh = SubResource("PlaneMesh_y6vtj")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="box/MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="box/MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_x3a40")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="box"]
+transform = Transform3D(4.3711398e-06, 0.99999994, -8.742277e-07, 100, -4.3711385e-08, 8.742277e-07, 8.742277e-06, -8.742278e-08, -9.999999, -10, 100, 0)
+mesh = SubResource("PlaneMesh_y6vtj")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="box/MeshInstance3D3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="box/MeshInstance3D3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_svsji")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="box"]
+transform = Transform3D(-4.3711384e-06, 4.371139e-08, -10, 100, -4.3711385e-08, -4.371139e-07, -4.3711393e-06, -0.99999994, -4.371139e-07, 0, 100, 10)
+mesh = SubResource("PlaneMesh_y6vtj")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="box/MeshInstance3D4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="box/MeshInstance3D4/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_l46c4")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="box"]
+transform = Transform3D(-4.371139e-06, -0.99999994, 0, 100, -4.3711385e-08, 0, 0, 0, 9.999999, 10, 100, 0)
+mesh = SubResource("PlaneMesh_y6vtj")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="box/MeshInstance3D5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="box/MeshInstance3D5/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ifrl2")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="box"]
+transform = Transform3D(-10, -8.742277e-08, 0, 8.742277e-07, -0.9999999, 0, 0, 0, 9.999999, 0, 200, 0)
+mesh = SubResource("PlaneMesh_y6vtj")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="box/MeshInstance3D6"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="box/MeshInstance3D6/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_385rf")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+omni_range = 32.0
+
+[node name="PlayerBody3D" parent="." instance=ExtResource("1_1hl1m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0503426, 0)

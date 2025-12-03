@@ -41,6 +41,7 @@ func switch_menu(menu: Menu, fowards := false) -> void:
 func back_menu() -> void:
 	var menu_pos := prev_menus.size() - 1
 	if menu_pos < 0: 
+		if Global.current_level == null: return
 		menu_toggle.emit()
 		return
 	var menu := prev_menus[menu_pos]

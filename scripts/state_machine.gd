@@ -5,6 +5,10 @@ var states: Dictionary[StringName,State] = {}
 
 @export var SHAPE_CAST: ShapeCast3D
 
+signal new_state(state: State, stop_state: State)
+
+var c_state: State
+
 func _ready() -> void:
 	# Store children in <states>
 	for child in get_children():
@@ -21,17 +25,19 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	CURRENT_STATE.update(delta)
 
-func on_child_transition(new_state_name: StringName) -> void:
-	print(new_state_name)
-	var new_state = states.get(new_state_name)
+func on_child_transition(c_state_name: StringName) -> void:
+	#print(c_state_name)
+	var p_state := c_state
+	c_state = states.get(c_state_name)
 	
-	if new_state == null: 
-		push_error("State \"" + new_state_name + "\" does not exist.")
+	if c_state == null: 
+		push_error("State \"" + c_state_name + "\" does not exist.")
 		return
-	assert(new_state is State)
-	if new_state == CURRENT_STATE: 
-		push_error("State \"" + new_state_name + "\" transitioned into self.")
+	assert(c_state is State)
+	if c_state == CURRENT_STATE: 
+		push_error("State \"" + c_state_name + "\" transitioned into self.")
 		return
 	CURRENT_STATE.exit()
-	CURRENT_STATE = new_state
+	CURRENT_STATE = c_state
 	CURRENT_STATE.enter()
+	new_state.emit(c_state, p_state)
