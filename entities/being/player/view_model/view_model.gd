@@ -15,6 +15,7 @@ class_name ViewModel extends Node3D
 
 var camera: Camera3D
 var facing_point: Vector3
+var collider: Object
 
 var is_zoomed := false
 
