@@ -93,6 +93,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.3, -0.4)
 [node name="RecoilPivot" type="Node3D" parent="MovementPivot/HandPivot"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MovementPivot/HandPivot/RecoilPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16915908, 0.07746619)
 mesh = ExtResource("3_4n7t2")
 skeleton = NodePath("../../../..")
 

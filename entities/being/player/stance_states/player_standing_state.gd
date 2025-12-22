@@ -1,7 +1,6 @@
 class_name PlayerStandingState extends PlayerStanceState
 
 func enter() -> void:
-	#ANIM_PLAYER.play("RESET")
 	return
 
 func phys_update(_delta: float) -> void:

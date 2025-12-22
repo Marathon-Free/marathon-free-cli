@@ -17,6 +17,7 @@ func _ready() -> void:
 		child.transition.connect(on_child_transition)
 	
 	# Enter default state
+	await owner.ready
 	CURRENT_STATE.enter()
 
 func _physics_process(delta: float) -> void:

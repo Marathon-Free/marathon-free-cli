@@ -2,7 +2,6 @@ class_name PlayerBody3D extends CharacterBody3D
 
 @onready var COLLISION_SHAPE := $CollisionShape3D as CollisionShape3D
 @onready var CROUCH_CAST := $CrouchCast as ShapeCast3D
-@onready var CROUCH_CAST2 := $CrouchCast2 as ShapeCast3D
 @onready var PIVOT_Y := $PivotY as Node3D
 @onready var PIVOT_X := $PivotY/PivotX as Node3D
 @onready var CAMERA := $PivotY/PivotX/Camera3D as Camera3D
@@ -46,13 +45,13 @@ func _physics_process(delta: float) -> void:
 	
 	move(delta)
 	move_and_slide()
-	#zoom(delta)
 	
 	return
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		# Mouse Look
+		# event.relative gives ridiculously high values.
 		look(-event.relative/10000)
 
 func look(mouse_movement: Vector2, is_controller := false) -> void:
@@ -62,10 +61,10 @@ func look(mouse_movement: Vector2, is_controller := false) -> void:
 		PIVOT_Y.rotate_y(mouse_movement.x * Global.controller_sensitivity * Global.sens_multi)
 		return
 	PIVOT_X.rotate_x(mouse_movement.y * Global.mouse_sensitivity * Global.sens_multi)
-	PIVOT_X.rotation.x = clampf(PIVOT_X.rotation.x, -1.5708, 1.5708)
+	PIVOT_X.rotation.x = clampf(PIVOT_X.rotation.x, -PI/2, PI/2)
 	PIVOT_Y.rotate_y(mouse_movement.x * Global.mouse_sensitivity * Global.sens_multi)
 
-func move(delta := 1.0) -> void:
+func move(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
