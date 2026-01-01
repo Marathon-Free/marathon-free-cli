@@ -1,3 +1,4 @@
+#@tool
 class_name PlayerBody3D extends CharacterBody3D
 
 @onready var COLLISION_SHAPE := $CollisionShape3D as CollisionShape3D
@@ -7,7 +8,9 @@ class_name PlayerBody3D extends CharacterBody3D
 @onready var CAMERA := $PivotY/PivotX/Camera3D as Camera3D
 @onready var RAY_CAST := $PivotY/PivotX/Camera3D/RayCast3D as RayCast3D
 @onready var VIEW_MODEL := $PivotY/PivotX/Camera3D/ViewModel as ViewModel
+@onready var MOVEMENT_STATE_MACHINE := $MovementStateMachine as StateMachine
 @onready var MOVEMENT_PLAYER := $MovementPlayer as AnimationPlayer
+@onready var STANCE_STATE_MACHINE := $StanceStateMachine as StateMachine
 @onready var STANCE_PLAYER := $StancePlayer as AnimationPlayer
 
 var speed := 0.0
@@ -16,32 +19,44 @@ var friction := 0.0
 var jump_strength := 0.0
 
 var speed_multi := 1.0
-var speed_multi_zeroes := 0
-var jump_vel_multi := 1.0
-var jump_vel_multi_zeroes := 0
+var speed_multi_zeroes := 0 # We add multipliers by multiplying the previous value, and remove them
+							# by dividing. As a result, we have to keep track of x0 multipliers 
+							# seperately.
+var accel_multi := 1.0
+var accel_multi_zeroes := 0
+var frict_multi := 1.0
+var frict_multi_zeroes := 0
+var j_vel_multi := 1.0
+var j_vel_multi_zeroes := 0
 
 var is_zoomed := false
 
 func _ready() -> void:
-	VIEW_MODEL.camera = CAMERA
 	#print("Ready")
 	return
 
 func _physics_process(delta: float) -> void:
+	
+	
+	
+	
+	
 	var facing : Vector3
 	if RAY_CAST.is_colliding():
 		facing = RAY_CAST.get_collision_point()
 	else:
-		facing = -RAY_CAST.target_position.length() * CAMERA.global_transform.basis.z + CAMERA.global_position
-	
-	VIEW_MODEL.collider = RAY_CAST.get_collider()
-	VIEW_MODEL.facing_point = facing
-	VIEW_MODEL.point_held_item(delta)
-	#print(facing)
+		facing = RAY_CAST.target_position.length() * (-CAMERA.global_transform.basis.z) + CAMERA.global_position
 	
 	# Controller Look
 	var look_dir := -Input.get_vector(&"player_look_left", &"player_look_right", &"player_look_up", &"player_look_down")
 	if look_dir: look(look_dir * delta, true)
+	
+	VIEW_MODEL.collider = RAY_CAST.get_collider()
+	#VIEW_MODEL.facing_point = facing
+	VIEW_MODEL.point_held_item(delta, facing, up_direction)
+	#print(facing)
+	
+	CAMERA.fov = VIEW_MODEL.zoom(delta, CAMERA.fov)
 	
 	move(delta)
 	move_and_slide()
@@ -54,22 +69,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		# event.relative gives ridiculously high values.
 		look(-event.relative/10000)
 
-func look(mouse_movement: Vector2, is_controller := false) -> void:
-	if is_controller:
-		PIVOT_X.rotate_x(mouse_movement.y * Global.controller_sensitivity * Global.sens_multi)
-		PIVOT_X.rotation.x = clampf(PIVOT_X.rotation.x, -1.5708, 1.5708)
-		PIVOT_Y.rotate_y(mouse_movement.x * Global.controller_sensitivity * Global.sens_multi)
-		return
-	PIVOT_X.rotate_x(mouse_movement.y * Global.mouse_sensitivity * Global.sens_multi)
+func look(look_vec: Vector2, is_controller := false) -> void:
+	var sensitivity := Global.controller_sensitivity if is_controller else Global.mouse_sensitivity
+	PIVOT_X.rotate_x(look_vec.y * sensitivity * Global.sens_multi)
 	PIVOT_X.rotation.x = clampf(PIVOT_X.rotation.x, -PI/2, PI/2)
-	PIVOT_Y.rotate_y(mouse_movement.x * Global.mouse_sensitivity * Global.sens_multi)
+	PIVOT_Y.rotate_y(look_vec.x * sensitivity * Global.sens_multi)
 
 func move(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	if Input.is_action_just_pressed(&"player_jump") && jump_vel_multi_zeroes == 0:
-		velocity += jump_strength * jump_vel_multi * global_transform.basis.y
+	if Input.is_action_just_pressed(&"player_jump") && j_vel_multi_zeroes == 0:
+		velocity += jump_strength * j_vel_multi * global_transform.basis.y
 	
 	# This movement direction works, even if the player is rotated (Like to match the gravity)
 	var lraxis := Input.get_axis(&"player_move_left", &"player_move_right")
@@ -88,18 +99,31 @@ func move(delta: float) -> void:
 func apply_speed_multiplier(new_multi: float) -> void:
 	if new_multi == 0.0 and speed_multi_zeroes > 0: speed_multi_zeroes += 1
 	else: speed_multi *= new_multi
-
 func remove_speed_multiplier(end_multi: float) -> void:
 	if end_multi == 0.0 and speed_multi_zeroes > 0: speed_multi_zeroes -= 1
 	else: speed_multi /= end_multi
-
+func apply_accel_multiplier(new_multi: float) -> void:
+	if new_multi == 0.0 and accel_multi_zeroes > 0: accel_multi_zeroes += 1
+	else: accel_multi *= new_multi
+func remove_accel_multiplier(end_multi: float) -> void:
+	if end_multi == 0.0 and accel_multi_zeroes > 0: accel_multi_zeroes -= 1
+	else: accel_multi /= end_multi
+func apply_frict_multiplier(new_multi: float) -> void:
+	if new_multi == 0.0 and frict_multi_zeroes > 0: frict_multi_zeroes += 1
+	else: frict_multi *= new_multi
+func remove_frict_multiplier(end_multi: float) -> void:
+	if end_multi == 0.0 and frict_multi_zeroes > 0: frict_multi_zeroes -= 1
+	else: frict_multi /= end_multi
 func apply_jump_multiplier(new_multi: float) -> void:
-	if new_multi == 0.0 and jump_vel_multi_zeroes > 0: jump_vel_multi_zeroes += 1
-	else: jump_vel_multi *= new_multi
-
+	if new_multi == 0.0 and j_vel_multi_zeroes > 0: j_vel_multi_zeroes += 1
+	else: j_vel_multi *= new_multi
 func remove_jump_multiplier(end_multi: float) -> void:
-	if end_multi == 0.0 and jump_vel_multi_zeroes > 0: jump_vel_multi_zeroes -= 1
-	else: jump_vel_multi /= end_multi
+	if end_multi == 0.0 and j_vel_multi_zeroes > 0: j_vel_multi_zeroes -= 1
+	else: j_vel_multi /= end_multi
+
+
+
+
 
 func _on_movement_state_machine_new_state(state: State, _stop_state: State) -> void:
 	assert(state is PlayerMovementState)
@@ -115,5 +139,7 @@ func _on_stance_state_machine_new_state(state: State, stop_state: State) -> void
 	assert(state is PlayerStanceState)
 	var s_state := state as PlayerStanceState
 	apply_speed_multiplier(s_state.SPEED_MULTIPLIER)
+	apply_accel_multiplier(s_state.ACCEL_MULTIPLIER)
+	apply_frict_multiplier(s_state.FRICT_MULTIPLIER)
 	if stop_state is not PlayerStanceState: return
 	remove_speed_multiplier(stop_state.SPEED_MULTIPLIER)

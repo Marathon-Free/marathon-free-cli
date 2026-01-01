@@ -1,7 +1,7 @@
 class_name PlayerCrouchedState extends PlayerStanceState
 
 var trying_to_crouch: bool
-var animation_speed := 3.0
+@export var animation_speed := 3.0
 
 func enter() -> void:
 	trying_to_crouch = true

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cecgf1qvyonwd" path="res://entities/being/player/view_model/view_model.gd" id="1_cpcji"]
 [ext_resource type="Resource" uid="uid://p35ki3nmv01b" path="res://data/held_item/magnum.tres" id="2_g6tde"]
-[ext_resource type="ArrayMesh" uid="uid://dnamp2d3bj8nk" path="res://assets/weapons/marathon_pistol_45_magnum_mega/marathon_pistol_45_magnum_mega.tres" id="3_4n7t2"]
+[ext_resource type="ArrayMesh" uid="uid://dnamp2d3bj8nk" path="res://assets/weapons/marathon_pistol_45_magnum_mega/marathon_pistol_45_magnum_mega.tres" id="3_41qto"]
 [ext_resource type="Animation" uid="uid://cpxjs6et0dy8o" path="res://assets/weapons/marathon_pistol_45_magnum_mega/recoil_marathon_pistol_45_magnum_mega.res" id="4_41qto"]
 
 [sub_resource type="Animation" id="Animation_41qto"]
@@ -10,7 +10,7 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MovementPivot/HandPivot/RecoilPivot:rotation:x")
+tracks/0/path = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot:rotation:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -21,7 +21,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MovementPivot/HandPivot/RecoilPivot:rotation:y")
+tracks/1/path = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot:rotation:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -32,7 +32,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("MovementPivot/HandPivot/RecoilPivot:rotation:z")
+tracks/2/path = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot:rotation:z")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -43,7 +43,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("MovementPivot/HandPivot/RecoilPivot:position:x")
+tracks/3/path = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot:position:x")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -54,7 +54,7 @@ tracks/3/keys = {
 tracks/4/type = "bezier"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("MovementPivot/HandPivot/RecoilPivot:position:y")
+tracks/4/path = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot:position:y")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -65,7 +65,7 @@ tracks/4/keys = {
 tracks/5/type = "bezier"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("MovementPivot/HandPivot/RecoilPivot:position:z")
+tracks/5/path = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot:position:z")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -80,22 +80,34 @@ _data = {
 &"default_recoil": ExtResource("4_41qto")
 }
 
-[node name="ViewModel" type="Node3D"]
+[node name="ViewModel" type="Node3D" node_paths=PackedStringArray("ARM_PIVOT", "MOVEMENT_PIVOT", "HAND_PIVOT1", "HAND_PIVOT2", "RECOIL_PIVOT", "MESH_INSTANCE", "ANIM_PLAYER", "REFIRE_TIMER")]
 script = ExtResource("1_cpcji")
+ARM_PIVOT = NodePath("MovementPivot/ArmPivot")
+MOVEMENT_PIVOT = NodePath("MovementPivot")
+HAND_PIVOT1 = NodePath("MovementPivot/ArmPivot/HandPivot1")
+HAND_PIVOT2 = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2")
+RECOIL_PIVOT = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot")
+MESH_INSTANCE = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot/MeshInstance3D")
+ANIM_PLAYER = NodePath("AnimationPlayer")
+REFIRE_TIMER = NodePath("RefireTimer")
 held_item = ExtResource("2_g6tde")
 metadata/_custom_type_script = "uid://cecgf1qvyonwd"
 
 [node name="MovementPivot" type="Node3D" parent="."]
 
-[node name="HandPivot" type="Node3D" parent="MovementPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.3, -0.4)
+[node name="ArmPivot" type="Node3D" parent="MovementPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 
-[node name="RecoilPivot" type="Node3D" parent="MovementPivot/HandPivot"]
+[node name="HandPivot1" type="Node3D" parent="MovementPivot/ArmPivot"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MovementPivot/HandPivot/RecoilPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16915908, 0.07746619)
-mesh = ExtResource("3_4n7t2")
-skeleton = NodePath("../../../..")
+[node name="HandPivot2" type="Node3D" parent="MovementPivot/ArmPivot/HandPivot1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, -0.4)
+
+[node name="RecoilPivot" type="Node3D" parent="MovementPivot/ArmPivot/HandPivot1/HandPivot2"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot"]
+mesh = ExtResource("3_41qto")
+skeleton = NodePath("../../../../../..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

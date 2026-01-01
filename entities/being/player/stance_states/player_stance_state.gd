@@ -4,6 +4,9 @@ var PLAYER: PlayerBody3D
 var ANIM_PLAYER: AnimationPlayer
 
 @export var SPEED_MULTIPLIER := 1.0
+@export var ACCEL_MULTIPLIER := 1.0
+@export var FRICT_MULTIPLIER := 1.0
+
 
 func _ready() -> void:
 	assert(owner is PlayerBody3D)
