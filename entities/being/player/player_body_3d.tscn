@@ -246,6 +246,7 @@ script = ExtResource("7_x7cpu")
 animation_speed = 10.0
 SPEED_MULTIPLIER = 0.5
 ACCEL_MULTIPLIER = 0.75
+FRICT_MULTIPLIER = 0.125
 metadata/_custom_type_script = "uid://bo7b5igh2gxdk"
 
 [node name="PlayerStandingState" type="Node" parent="StanceStateMachine"]

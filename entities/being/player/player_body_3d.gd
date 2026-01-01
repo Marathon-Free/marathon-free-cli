@@ -85,12 +85,16 @@ func move(delta: float) -> void:
 	# This movement direction works, even if the player is rotated (Like to match the gravity)
 	var lraxis := Input.get_axis(&"player_move_left", &"player_move_right")
 	var fbaxis := Input.get_axis(&"player_move_fowards", &"player_move_backwards")
-	var direction := (PIVOT_X.global_transform.basis.x * lraxis + PIVOT_Y.global_transform.basis.z * fbaxis)
+	var direction := (PIVOT_Y.global_transform.basis.x * lraxis + PIVOT_Y.global_transform.basis.z * fbaxis)
 	if direction.length() > 1: direction = direction.normalized()
 	if speed_multi_zeroes > 0: direction = Vector3.ZERO
 	
-	var velaccel = velocity.lerp(direction * speed * speed_multi, acceleration * speed_multi * delta)
-	var velfric = velocity.lerp(direction * speed * speed_multi, friction * delta)
+	
+	var accel2 := acceleration * accel_multi if accel_multi_zeroes == 0 else 0.0
+	var frict2 := friction * frict_multi if frict_multi_zeroes == 0 else 0.0
+	
+	var velaccel = velocity.lerp(direction * speed * speed_multi, accel2 * speed_multi * delta)
+	var velfric = velocity.lerp(direction * speed * speed_multi, frict2 * delta)
 	
 	velocity = velaccel if velaccel.length() < velfric.length() else velfric
 	if velocity.length() >= 0.1 or direction: return
@@ -143,3 +147,5 @@ func _on_stance_state_machine_new_state(state: State, stop_state: State) -> void
 	apply_frict_multiplier(s_state.FRICT_MULTIPLIER)
 	if stop_state is not PlayerStanceState: return
 	remove_speed_multiplier(stop_state.SPEED_MULTIPLIER)
+	remove_accel_multiplier(s_state.ACCEL_MULTIPLIER)
+	remove_frict_multiplier(s_state.FRICT_MULTIPLIER)
