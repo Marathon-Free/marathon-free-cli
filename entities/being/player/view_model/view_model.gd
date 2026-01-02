@@ -37,6 +37,17 @@ func attack() -> void:
 	
 	ANIM_PLAYER.play("default_recoil", -1, 1.0 / held_item.refire_time)
 	REFIRE_TIMER.start(held_item.refire_time)
+	
+	if collider is not Node: return
+	var being: BeingStatus
+	for child in (collider as Node).get_children():
+		if child is BeingStatus:
+			being = child
+			break
+	if being == null: return
+	
+	#owner.BEING_STATUS.damage(10.0) # Test by making the player shoot themselves lol
+	being.damage(10.0)
 
 func zoom(delta: float, c_fov: float) -> float:
 	# set zoom status
@@ -70,21 +81,6 @@ func point_held_item(delta: float, facing_point: Vector3, up := Vector3.UP) -> v
 	HAND_PIVOT1.global_rotation.x = lerp_angle(HAND_PIVOT1.global_rotation.x, ARM_PIVOT.global_rotation.x, 12.0 * speed_multi * delta)
 	HAND_PIVOT1.global_rotation.y = lerp_angle(HAND_PIVOT1.global_rotation.y, ARM_PIVOT.global_rotation.y, 12.0 * speed_multi * delta)
 	HAND_PIVOT1.global_rotation.z = lerp_angle(HAND_PIVOT1.global_rotation.z, ARM_PIVOT.global_rotation.z, 12.0 * speed_multi * delta)
-	#HAND_PIVOT1.global_rotation = HAND_PIVOT1.global_rotation.lerp(ARM_PIVOT.global_rotation, 8.0 * speed_multi * delta)
-	
-	#prev_hand_pos = prev_hand_pos.lerp(HAND_PIVOT1.global_position, delta)
-	#HAND_PIVOT2.global_position = prev_hand_pos
 	
 	HAND_PIVOT2.look_at(facing_point, up)
 	HAND_PIVOT2.rotation.z = 0
-	#var currently_facing := -HAND_PIVOT2.global_transform.basis.z
-	#var vector_to := facing_point - HAND_PIVOT2.global_position
-	#
-	#var axis := currently_facing.cross(vector_to).normalized()
-	#var angle := currently_facing.angle_to(vector_to)
-	#
-	#if axis: 
-		##HAND_PIVOT1.global_rotate(axis, lerpf(0.0, angle, 2*delta))
-		#HAND_PIVOT2.global_rotate(axis, lerpf(0.0, angle, 1))
-		#HAND_PIVOT2.rotation.z = 0
-	#print(MOVEMENT_PIVOT.global_rotation)

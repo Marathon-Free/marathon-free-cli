@@ -1,17 +1,18 @@
 #@tool
 class_name PlayerBody3D extends CharacterBody3D
 
-@onready var COLLISION_SHAPE := $CollisionShape3D as CollisionShape3D
-@onready var CROUCH_CAST := $CrouchCast as ShapeCast3D
-@onready var PIVOT_Y := $PivotY as Node3D
-@onready var PIVOT_X := $PivotY/PivotX as Node3D
-@onready var CAMERA := $PivotY/PivotX/Camera3D as Camera3D
-@onready var RAY_CAST := $PivotY/PivotX/Camera3D/RayCast3D as RayCast3D
-@onready var VIEW_MODEL := $PivotY/PivotX/Camera3D/ViewModel as ViewModel
-@onready var MOVEMENT_STATE_MACHINE := $MovementStateMachine as StateMachine
-@onready var MOVEMENT_PLAYER := $MovementPlayer as AnimationPlayer
-@onready var STANCE_STATE_MACHINE := $StanceStateMachine as StateMachine
-@onready var STANCE_PLAYER := $StancePlayer as AnimationPlayer
+@export var BEING_STATUS: BeingStatus
+@export var COLLISION_SHAPE: CollisionShape3D
+@export var CROUCH_CAST: ShapeCast3D
+@export var PIVOT_Y: Node3D
+@export var PIVOT_X: Node3D
+@export var CAMERA: Camera3D
+@export var RAY_CAST: RayCast3D
+@export var VIEW_MODEL: ViewModel
+@export var MOVEMENT_STATE_MACHINE: StateMachine
+@export var MOVEMENT_PLAYER: AnimationPlayer
+@export var STANCE_STATE_MACHINE: StateMachine
+@export var STANCE_PLAYER: AnimationPlayer
 
 var speed := 0.0
 var acceleration := 0.0
@@ -36,11 +37,6 @@ func _ready() -> void:
 	return
 
 func _physics_process(delta: float) -> void:
-	
-	
-	
-	
-	
 	var facing : Vector3
 	if RAY_CAST.is_colliding():
 		facing = RAY_CAST.get_collision_point()
@@ -62,6 +58,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	return
+
+func damaged() -> void:
+	pass
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

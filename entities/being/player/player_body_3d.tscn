@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://difrqebur2kpc"]
+[gd_scene load_steps=19 format=3 uid="uid://difrqebur2kpc"]
 
 [ext_resource type="Script" uid="uid://jf7a08qqowx0" path="res://entities/being/player/player_body_3d.gd" id="1_02h5w"]
+[ext_resource type="Script" uid="uid://nyw125it15r8" path="res://scripts/being_status.gd" id="2_7em2n"]
 [ext_resource type="Script" uid="uid://cgbpk171ln5e2" path="res://entities/being/player/hud/hud.gd" id="2_h8l83"]
 [ext_resource type="Script" uid="uid://chd0osbkqdv3h" path="res://scripts/state_machine.gd" id="2_tfbvc"]
 [ext_resource type="Script" uid="uid://duxw0vqlnjm38" path="res://entities/being/player/movement_states/player_idle_state.gd" id="3_2k0nr"]
@@ -156,13 +157,27 @@ _data = {
 &"floor_crouch": SubResource("Animation_i1jh8")
 }
 
-[node name="PlayerBody3D" type="CharacterBody3D"]
+[node name="PlayerBody3D" type="CharacterBody3D" node_paths=PackedStringArray("BEING_STATUS", "COLLISION_SHAPE", "CROUCH_CAST", "PIVOT_Y", "PIVOT_X", "CAMERA", "RAY_CAST", "VIEW_MODEL", "MOVEMENT_STATE_MACHINE", "MOVEMENT_PLAYER", "STANCE_STATE_MACHINE", "STANCE_PLAYER")]
 collision_layer = 12
 collision_mask = 15
 script = ExtResource("1_02h5w")
+BEING_STATUS = NodePath("BeingStatus")
+COLLISION_SHAPE = NodePath("CollisionShape3D")
+CROUCH_CAST = NodePath("CrouchCast")
+PIVOT_Y = NodePath("PivotY")
+PIVOT_X = NodePath("PivotY/PivotX")
+CAMERA = NodePath("PivotY/PivotX/Camera3D")
+RAY_CAST = NodePath("PivotY/PivotX/Camera3D/RayCast3D")
+VIEW_MODEL = NodePath("PivotY/PivotX/Camera3D/ViewModel")
+MOVEMENT_STATE_MACHINE = NodePath("MovementStateMachine")
+MOVEMENT_PLAYER = NodePath("MovementPlayer")
+STANCE_STATE_MACHINE = NodePath("StanceStateMachine")
+STANCE_PLAYER = NodePath("StancePlayer")
 metadata/_custom_type_script = "uid://jf7a08qqowx0"
 
 [node name="BeingStatus" type="Node" parent="."]
+script = ExtResource("2_7em2n")
+metadata/_custom_type_script = "uid://nyw125it15r8"
 
 [node name="Hud" type="CanvasLayer" parent="."]
 script = ExtResource("2_h8l83")
@@ -182,6 +197,17 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_i1jh8")
 expand_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Hud"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="Hud/HBoxContainer"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_lko6g")
@@ -253,5 +279,7 @@ metadata/_custom_type_script = "uid://bo7b5igh2gxdk"
 script = ExtResource("8_rngef")
 metadata/_custom_type_script = "uid://bk06qh0e75m5g"
 
+[connection signal="set_cur_health" from="BeingStatus" to="Hud" method="_on_being_status_set_cur_health"]
+[connection signal="set_max_health" from="BeingStatus" to="Hud" method="_on_being_status_set_max_health"]
 [connection signal="new_state" from="MovementStateMachine" to="." method="_on_movement_state_machine_new_state"]
 [connection signal="new_state" from="StanceStateMachine" to="." method="_on_stance_state_machine_new_state"]
