@@ -160,6 +160,7 @@ _data = {
 [node name="PlayerBody3D" type="CharacterBody3D" node_paths=PackedStringArray("BEING_STATUS", "COLLISION_SHAPE", "CROUCH_CAST", "PIVOT_Y", "PIVOT_X", "CAMERA", "RAY_CAST", "VIEW_MODEL", "MOVEMENT_STATE_MACHINE", "MOVEMENT_PLAYER", "STANCE_STATE_MACHINE", "STANCE_PLAYER")]
 collision_layer = 12
 collision_mask = 15
+platform_wall_layers = 1
 script = ExtResource("1_02h5w")
 BEING_STATUS = NodePath("BeingStatus")
 COLLISION_SHAPE = NodePath("CollisionShape3D")
@@ -233,6 +234,7 @@ fov = 90.0
 
 [node name="RayCast3D" type="RayCast3D" parent="PivotY/PivotX/Camera3D"]
 target_position = Vector3(0, 0, -2000)
+collision_mask = 13
 
 [node name="ViewModel" parent="PivotY/PivotX/Camera3D" instance=ExtResource("3_njume")]
 

@@ -10,7 +10,7 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot:rotation:x")
+tracks/0/path = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot:rotation:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -21,7 +21,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot:rotation:y")
+tracks/1/path = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot:rotation:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -32,7 +32,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot:rotation:z")
+tracks/2/path = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot:rotation:z")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -43,7 +43,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot:position:x")
+tracks/3/path = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot:position:x")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -54,7 +54,7 @@ tracks/3/keys = {
 tracks/4/type = "bezier"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot:position:y")
+tracks/4/path = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot:position:y")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -65,7 +65,7 @@ tracks/4/keys = {
 tracks/5/type = "bezier"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot:position:z")
+tracks/5/path = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot:position:z")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -80,14 +80,15 @@ _data = {
 &"default_recoil": ExtResource("4_41qto")
 }
 
-[node name="ViewModel" type="Node3D" node_paths=PackedStringArray("ARM_PIVOT", "MOVEMENT_PIVOT", "HAND_PIVOT1", "HAND_PIVOT2", "RECOIL_PIVOT", "MESH_INSTANCE", "ANIM_PLAYER", "REFIRE_TIMER")]
+[node name="ViewModel" type="Node3D" node_paths=PackedStringArray("MOVEMENT_PIVOT", "ARM_PIVOT", "ARM_PIVOT2", "HAND_PIVOT", "RECOIL_PIVOT", "MESH_INSTANCE", "PROJECTILE_START_POINT", "ANIM_PLAYER", "REFIRE_TIMER")]
 script = ExtResource("1_cpcji")
-ARM_PIVOT = NodePath("MovementPivot/ArmPivot")
 MOVEMENT_PIVOT = NodePath("MovementPivot")
-HAND_PIVOT1 = NodePath("MovementPivot/ArmPivot/HandPivot1")
-HAND_PIVOT2 = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2")
-RECOIL_PIVOT = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot")
-MESH_INSTANCE = NodePath("MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot/MeshInstance3D")
+ARM_PIVOT = NodePath("MovementPivot/ArmPivot")
+ARM_PIVOT2 = NodePath("MovementPivot/ArmPivot/ArmPivot2")
+HAND_PIVOT = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot")
+RECOIL_PIVOT = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot")
+MESH_INSTANCE = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot/MeshInstance3D")
+PROJECTILE_START_POINT = NodePath("ProjectileStartPoint")
 ANIM_PLAYER = NodePath("AnimationPlayer")
 REFIRE_TIMER = NodePath("RefireTimer")
 held_item = ExtResource("2_g6tde")
@@ -98,16 +99,19 @@ metadata/_custom_type_script = "uid://cecgf1qvyonwd"
 [node name="ArmPivot" type="Node3D" parent="MovementPivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 
-[node name="HandPivot1" type="Node3D" parent="MovementPivot/ArmPivot"]
+[node name="ArmPivot2" type="Node3D" parent="MovementPivot/ArmPivot"]
 
-[node name="HandPivot2" type="Node3D" parent="MovementPivot/ArmPivot/HandPivot1"]
+[node name="HandPivot" type="Node3D" parent="MovementPivot/ArmPivot/ArmPivot2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, -0.4)
 
-[node name="RecoilPivot" type="Node3D" parent="MovementPivot/ArmPivot/HandPivot1/HandPivot2"]
+[node name="RecoilPivot" type="Node3D" parent="MovementPivot/ArmPivot/ArmPivot2/HandPivot"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MovementPivot/ArmPivot/HandPivot1/HandPivot2/RecoilPivot"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot"]
 mesh = ExtResource("3_41qto")
 skeleton = NodePath("../../../../../..")
+
+[node name="ProjectileStartPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

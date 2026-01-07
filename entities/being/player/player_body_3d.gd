@@ -33,15 +33,17 @@ var j_vel_multi_zeroes := 0
 var is_zoomed := false
 
 func _ready() -> void:
-	#print("Ready")
-	return
+	init2()
+func init2() -> void:
+	await ready
+	RAY_CAST.add_exception(self)
 
 func _physics_process(delta: float) -> void:
 	var facing : Vector3
 	if RAY_CAST.is_colliding():
 		facing = RAY_CAST.get_collision_point()
 	else:
-		facing = RAY_CAST.target_position.length() * (-CAMERA.global_transform.basis.z) + CAMERA.global_position
+		facing = RAY_CAST.target_position + RAY_CAST.global_position
 	
 	# Controller Look
 	var look_dir := -Input.get_vector(&"player_look_left", &"player_look_right", &"player_look_up", &"player_look_down")
@@ -79,12 +81,12 @@ func move(delta: float) -> void:
 		velocity += get_gravity() * delta
 	
 	if Input.is_action_just_pressed(&"player_jump") && j_vel_multi_zeroes == 0:
-		velocity += jump_strength * j_vel_multi * global_transform.basis.y
+		velocity += jump_strength * j_vel_multi * global_transform.basis.y.normalized()
 	
 	# This movement direction works, even if the player is rotated (Like to match the gravity)
 	var lraxis := Input.get_axis(&"player_move_left", &"player_move_right")
 	var fbaxis := Input.get_axis(&"player_move_fowards", &"player_move_backwards")
-	var direction := (PIVOT_Y.global_transform.basis.x * lraxis + PIVOT_Y.global_transform.basis.z * fbaxis)
+	var direction := (PIVOT_Y.global_transform.basis.x * lraxis + PIVOT_Y.global_transform.basis.z.normalized() * fbaxis)
 	if direction.length() > 1: direction = direction.normalized()
 	if speed_multi_zeroes > 0: direction = Vector3.ZERO
 	
@@ -146,5 +148,5 @@ func _on_stance_state_machine_new_state(state: State, stop_state: State) -> void
 	apply_frict_multiplier(s_state.FRICT_MULTIPLIER)
 	if stop_state is not PlayerStanceState: return
 	remove_speed_multiplier(stop_state.SPEED_MULTIPLIER)
-	remove_accel_multiplier(s_state.ACCEL_MULTIPLIER)
-	remove_frict_multiplier(s_state.FRICT_MULTIPLIER)
+	remove_accel_multiplier(stop_state.ACCEL_MULTIPLIER)
+	remove_frict_multiplier(stop_state.FRICT_MULTIPLIER)

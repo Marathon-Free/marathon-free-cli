@@ -30,7 +30,7 @@ func _ready() -> void:
 
 func player_crouch_test() -> void:
 	if player == null: return
-	print(player.COLLISION_SHAPE.position.y)
+	#print(player.COLLISION_SHAPE.position.y)
 	get_tree().create_timer(0.1).timeout.connect(player_crouch_test)
 
 func _physics_process(_delta: float) -> void:
