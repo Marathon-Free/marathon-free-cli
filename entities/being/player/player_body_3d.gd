@@ -33,9 +33,6 @@ var j_vel_multi_zeroes := 0
 var is_zoomed := false
 
 func _ready() -> void:
-	init2()
-func init2() -> void:
-	await ready
 	RAY_CAST.add_exception(self)
 
 func _physics_process(delta: float) -> void:
@@ -46,7 +43,8 @@ func _physics_process(delta: float) -> void:
 		facing = RAY_CAST.target_position + RAY_CAST.global_position
 	
 	# Controller Look
-	var look_dir := -Input.get_vector(&"player_look_left", &"player_look_right", &"player_look_up", &"player_look_down")
+	var look_dir := Vector2.ZERO if Global.menu_open else -Input.get_vector(&"player_look_left", &"player_look_right", &"player_look_up", &"player_look_down")
+	
 	if look_dir: look(look_dir * delta, true)
 	
 	VIEW_MODEL.collider = RAY_CAST.get_collider()
@@ -65,7 +63,7 @@ func damaged() -> void:
 	pass
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+	if event is InputEventMouseMotion and !Global.menu_open:
 		# Mouse Look
 		# event.relative gives ridiculously high values.
 		look(-event.relative/10000)
@@ -77,16 +75,20 @@ func look(look_vec: Vector2, is_controller := false) -> void:
 	PIVOT_Y.rotate_y(look_vec.x * sensitivity * Global.sens_multi)
 
 func move(delta: float) -> void:
+	var direction := Vector3.ZERO
+	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	if Input.is_action_just_pressed(&"player_jump") && j_vel_multi_zeroes == 0:
-		velocity += jump_strength * j_vel_multi * global_transform.basis.y.normalized()
+	if !Global.menu_open:
+		if Input.is_action_just_pressed(&"player_jump") && j_vel_multi_zeroes == 0:
+			velocity += jump_strength * j_vel_multi * global_transform.basis.y.normalized()
+		
+		# This movement direction works, even if the player is rotated (Like to match the gravity)
+		var lraxis := Input.get_axis(&"player_move_left", &"player_move_right")
+		var fbaxis := Input.get_axis(&"player_move_fowards", &"player_move_backwards")
+		direction = (PIVOT_Y.global_transform.basis.x.normalized() * lraxis + PIVOT_Y.global_transform.basis.z.normalized() * fbaxis)
 	
-	# This movement direction works, even if the player is rotated (Like to match the gravity)
-	var lraxis := Input.get_axis(&"player_move_left", &"player_move_right")
-	var fbaxis := Input.get_axis(&"player_move_fowards", &"player_move_backwards")
-	var direction := (PIVOT_Y.global_transform.basis.x * lraxis + PIVOT_Y.global_transform.basis.z.normalized() * fbaxis)
 	if direction.length() > 1: direction = direction.normalized()
 	if speed_multi_zeroes > 0: direction = Vector3.ZERO
 	

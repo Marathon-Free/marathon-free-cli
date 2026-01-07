@@ -5,6 +5,7 @@ var sens_multi := 1.0
 var mouse_sensitivity := 12.0
 var controller_sensitivity := 3.0
 var default_fov := 90.0
+var menu_open := true
 
 var current_level: Level
 

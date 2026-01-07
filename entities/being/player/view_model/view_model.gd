@@ -33,7 +33,8 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	#print(REFIRE_TIMER.time_left)
-	if Input.is_action_pressed(&"attack") and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED: attack()
+	if Input.is_action_pressed(&"attack") and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		attack()
 
 func attack() -> void:
 	if !REFIRE_TIMER.is_stopped(): return

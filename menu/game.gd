@@ -27,6 +27,7 @@ func toggle_menu() -> void:
 
 func menu_on() -> void:
 	menus.visible = true
+	Global.menu_open = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	if c_level and Global.pausable:
 		c_level.set_process(false)
@@ -35,6 +36,7 @@ func menu_on() -> void:
 
 func menu_off() -> void:
 	menus.visible = false
+	Global.menu_open = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if c_level and Global.pausable:
 		c_level.set_process(true)
