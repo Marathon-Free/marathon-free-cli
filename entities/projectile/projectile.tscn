@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cvccmmm53ikcq" path="res://entities/projectile/projectile.gd" id="1_ffkh4"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_ffkh4"]
-radius = 0.1
+[sub_resource type="SphereShape3D" id="SphereShape3D_iqisb"]
+radius = 0.13232161
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_alv3l"]
 radius = 0.1
@@ -18,23 +18,27 @@ albedo_color = Color(1, 0.39, 0.39, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_ffkh4"]
 size = Vector3(0.05, 0.05, 0.05)
 
-[node name="Projectile" type="RigidBody3D" node_paths=PackedStringArray("AREA", "TIMER")]
+[node name="Projectile" type="RigidBody3D" node_paths=PackedStringArray("area", "timer")]
+process_mode = 4
 top_level = true
-collision_layer = 13
+collision_layer = 2
 collision_mask = 3
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_ffkh4")
-AREA = NodePath("Area3D")
-TIMER = NodePath("Timer")
+area = NodePath("Area3D")
+timer = NodePath("Timer")
 metadata/_custom_type_script = "uid://cvccmmm53ikcq"
 
 [node name="Area3D" type="Area3D" parent="."]
-visible = false
+collision_layer = 2
+collision_mask = 9
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("SphereShape3D_ffkh4")
+shape = SubResource("SphereShape3D_iqisb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_alv3l")
@@ -43,7 +47,7 @@ shape = SubResource("SphereShape3D_alv3l")
 mesh = SubResource("SphereMesh_ffkh4")
 surface_material_override/0 = SubResource("StandardMaterial3D_eg7v0")
 
-[node name="Marker3D" type="MeshInstance3D" parent="."]
+[node name="Mesh2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12474851, 0)
 mesh = SubResource("BoxMesh_ffkh4")
 

@@ -10,4 +10,5 @@ name = &"45MagnumMegaClass"
 nice_name = ".45 Magnum Mega Class"
 mesh = ExtResource("1_813mx")
 recoil = ExtResource("2_0vc60")
+refire_time = 0.2
 metadata/_custom_type_script = "uid://51qtdeanm8pb"

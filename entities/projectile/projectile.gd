@@ -1,34 +1,28 @@
 class_name Projectile
 extends RigidBody3D
 
-@export var AREA: Area3D
-@export var TIMER: Timer
+@export var area: Area3D
+@export var timer: Timer
 
-func _ready() -> void:
-	pass
-	#AREA.body_entered.connect(proj_collide)
+var damage: float
+var grav_multi := 0.5
 
-func fire(new_vel: Vector3) -> void:
-	apply_central_impulse(new_vel)
-	TIMER.wait_time = 10
-	TIMER.start()
-	await TIMER.timeout
+func fire(dir: Vector3, set_damage := 10.0) -> void:
+	damage = set_damage
+	area.body_entered.connect(proj_collide)
+	apply_central_impulse(dir)
+	timer.start()
+	await timer.timeout
 	queue_free()
 
-func proj_collide() -> void:
-	pass
+func proj_collide(body: Node3D) -> void:
+	if not body is PhysicsBody3D: return
+	for child in body.get_children():
+		if child is BeingStatus:
+			child.damage(damage)
+			queue_free()
+			break
  
 func _physics_process(_delta: float) -> void:
-	pass
-	
-	#linear_velocity = linear_velocity.lerp(Vector3.ZERO, 0.01 * delta)
-	#linear_velocity += get_gravity()
-	#
-	#print("ACK")
-	
-	
-	#var collision := move_and_collide(velocity * delta)
-	#print("test")
-	#if !collision: return
-	#print("collider exists")
-	#queue_free()
+	if get_colliding_bodies().size() > 0:
+		queue_free()

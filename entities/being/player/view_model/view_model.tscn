@@ -80,18 +80,18 @@ _data = {
 &"default_recoil": ExtResource("4_41qto")
 }
 
-[node name="ViewModel" type="Node3D" node_paths=PackedStringArray("MOVEMENT_PIVOT", "ARM_PIVOT", "ARM_PIVOT2", "HAND_PIVOT", "RECOIL_PIVOT", "MESH_INSTANCE", "PROJECTILE_START_POINT", "ANIM_PLAYER", "REFIRE_TIMER")]
+[node name="ViewModel" type="Node3D" node_paths=PackedStringArray("movememnt_pivot", "arm_pivot", "arm_pivot2", "hand_pivot", "recoil_pivot", "mesh_instance", "projectile_start_point", "anim_player", "refire_timer")]
 script = ExtResource("1_cpcji")
-MOVEMENT_PIVOT = NodePath("MovementPivot")
-ARM_PIVOT = NodePath("MovementPivot/ArmPivot")
-ARM_PIVOT2 = NodePath("MovementPivot/ArmPivot/ArmPivot2")
-HAND_PIVOT = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot")
-RECOIL_PIVOT = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot")
-MESH_INSTANCE = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot/MeshInstance3D")
-PROJECTILE_START_POINT = NodePath("ProjectileStartPoint")
-ANIM_PLAYER = NodePath("AnimationPlayer")
-REFIRE_TIMER = NodePath("RefireTimer")
 held_item = ExtResource("2_g6tde")
+movememnt_pivot = NodePath("MovementPivot")
+arm_pivot = NodePath("MovementPivot/ArmPivot")
+arm_pivot2 = NodePath("MovementPivot/ArmPivot/ArmPivot2")
+hand_pivot = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot")
+recoil_pivot = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot")
+mesh_instance = NodePath("MovementPivot/ArmPivot/ArmPivot2/HandPivot/RecoilPivot/MeshInstance3D")
+projectile_start_point = NodePath("ProjectileStartPoint")
+anim_player = NodePath("AnimationPlayer")
+refire_timer = NodePath("RefireTimer")
 metadata/_custom_type_script = "uid://cecgf1qvyonwd"
 
 [node name="MovementPivot" type="Node3D" parent="."]

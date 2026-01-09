@@ -12,12 +12,12 @@ func _ready() -> void:
 func update() -> void:
 	$Label3D.text = str(a) + " / " + str(b)
 
-func _on_being_status_set_max_health(max_health: float) -> void:
+func _on_being_status_max_health_changed(max_health: float) -> void:
 	b = max_health
 	update()
 
 
-func _on_being_status_set_cur_health(new_health: float) -> void:
+func _on_being_status_cur_health_changed(new_health: float) -> void:
 	a = new_health
 	print("ow (" + str(new_health) + ")")
 	update()

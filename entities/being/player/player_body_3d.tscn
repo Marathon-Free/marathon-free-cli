@@ -178,6 +178,11 @@ metadata/_custom_type_script = "uid://jf7a08qqowx0"
 
 [node name="BeingStatus" type="Node" parent="."]
 script = ExtResource("2_7em2n")
+max_armour = 100.0
+max_shield = 100.0
+armour = 100.0
+shield = 100.0
+armor_strength = 0.7999999999999999
 metadata/_custom_type_script = "uid://nyw125it15r8"
 
 [node name="Hud" type="CanvasLayer" parent="."]
@@ -199,16 +204,27 @@ grow_vertical = 2
 texture = ExtResource("3_i1jh8")
 expand_mode = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Hud"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Hud"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 27.0
 grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Hud/VBoxContainer"]
+layout_mode = 2
 alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="Hud/HBoxContainer"]
+[node name="HealthBar" type="ProgressBar" parent="Hud/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
+
+[node name="ArmourBar" type="ProgressBar" parent="Hud/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+
+[node name="ShieldBar" type="ProgressBar" parent="Hud/VBoxContainer"]
+custom_minimum_size = Vector2(484, 0)
+layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_lko6g")
@@ -281,7 +297,11 @@ metadata/_custom_type_script = "uid://bo7b5igh2gxdk"
 script = ExtResource("8_rngef")
 metadata/_custom_type_script = "uid://bk06qh0e75m5g"
 
-[connection signal="set_cur_health" from="BeingStatus" to="Hud" method="_on_being_status_set_cur_health"]
-[connection signal="set_max_health" from="BeingStatus" to="Hud" method="_on_being_status_set_max_health"]
+[connection signal="cur_armour_changed" from="BeingStatus" to="Hud" method="_on_being_status_cur_armour_changed"]
+[connection signal="cur_health_changed" from="BeingStatus" to="Hud" method="_on_being_status_cur_health_changed"]
+[connection signal="cur_shield_changed" from="BeingStatus" to="Hud" method="_on_being_status_cur_shield_changed"]
+[connection signal="max_armour_changed" from="BeingStatus" to="Hud" method="_on_being_status_max_armour_changed"]
+[connection signal="max_health_changed" from="BeingStatus" to="Hud" method="_on_being_status_max_health_changed"]
+[connection signal="max_shield_changed" from="BeingStatus" to="Hud" method="_on_being_status_max_shield_changed"]
 [connection signal="new_state" from="MovementStateMachine" to="." method="_on_movement_state_machine_new_state"]
 [connection signal="new_state" from="StanceStateMachine" to="." method="_on_stance_state_machine_new_state"]
